@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useState,
 } from "react";
 
@@ -6,12 +7,16 @@ import { DAYS } from "../constants/days";
 
 import type {
   Day,
+  MedicationAssignment,
 } from "../interfaces/medication.interface";
 
 interface AddMedicineSheetProps {
   open: boolean;
 
   selectedCompartmentIds: string[];
+
+  editingMedication:
+    MedicationAssignment | null;
 
   onClose: () => void;
 
@@ -20,12 +25,13 @@ interface AddMedicineSheetProps {
     days: Day[];
     hour: number;
     minute: number;
-  }) => void;
+  }) => Promise<void>;
 }
 
 export default function AddMedicineSheet({
   open,
   selectedCompartmentIds,
+  editingMedication,
   onClose,
   onSave,
 }: AddMedicineSheetProps) {
@@ -49,6 +55,62 @@ export default function AddMedicineSheet({
     error,
     setError,
   ] = useState("");
+
+  const displayCompartmentIds =
+  editingMedication
+    ? editingMedication.compartmentIds
+    : selectedCompartmentIds;
+
+  /*
+ * ==========================================
+ * LOAD MEDICATION FOR EDIT
+ * ==========================================
+ *
+ * null = Add mode
+ *
+ * medication = Edit mode
+ */
+useEffect(() => {
+
+  /*
+   * ADD MODE
+   */
+  if (!editingMedication) {
+
+    setMedicineName("");
+
+    setDays([]);
+
+    setTime("08:00");
+
+    setError("");
+
+    return;
+  }
+
+  /*
+   * EDIT MODE
+   */
+
+  setMedicineName(
+    editingMedication.medicineName
+  );
+
+  setDays(
+    editingMedication.schedules.map(
+      (schedule) =>
+        schedule.day
+    )
+  );
+
+  setTime(
+    editingMedication.schedules[0]?.time ??
+    "08:00"
+  );
+
+  setError("");
+
+}, [editingMedication]);
 
   /*
    * ==========================================
@@ -85,7 +147,7 @@ export default function AddMedicineSheet({
    * ==========================================
    */
 
-  const handleSubmit = () => {
+  const handleSubmit =  async() => {
 
     /*
      * Validate medicine name
@@ -147,16 +209,30 @@ export default function AddMedicineSheet({
     /*
      * Send data to Dashboard
      */
-    onSave({
-      medicineName:
-        medicineName.trim(),
+   try {
 
-      days,
+  await onSave({
+    medicineName:
+      medicineName.trim(),
 
-      hour,
+    days,
 
-      minute,
-    });
+    hour,
+
+    minute,
+  });
+
+} catch (error) {
+
+  console.error(
+    "Failed to save medication:",
+    error
+  );
+
+  setError(
+    "Failed to save medicine. Please try again."
+  );
+}
   };
 
   /*
@@ -198,17 +274,19 @@ export default function AddMedicineSheet({
           <div>
 
             <p className="eyebrow">
-              ADD MEDICINE
-            </p>
+            {editingMedication
+              ? "EDIT MEDICINE"
+              : "ADD MEDICINE"}
+          </p>
 
             <h2 id="add-medicine-title">
               Set medicine schedule
             </h2>
 
             <p>
-              {selectedCompartmentIds.length}{" "}
+              {displayCompartmentIds.length}{" "}
               {
-                selectedCompartmentIds.length ===
+                displayCompartmentIds.length ===
                 1
                   ? "cell"
                   : "cells"
@@ -217,7 +295,7 @@ export default function AddMedicineSheet({
 
               <strong>
                 {
-                  selectedCompartmentIds.join(
+                  displayCompartmentIds.join(
                     " · "
                   )
                 }
@@ -383,7 +461,9 @@ export default function AddMedicineSheet({
               type="button"
               onClick={handleSubmit}
             >
-              Save Medicine
+              {editingMedication
+              ? "Update Medicine"
+              : "Save Medicine"}
             </button>
 
           </div>

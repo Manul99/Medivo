@@ -36,6 +36,10 @@ function Dashboard() {
     setMedications,
   ] = useState<MedicationAssignment[]>([]);
 
+  const [
+  editingMedication,
+  setEditingMedication,
+] = useState<MedicationAssignment | null>(null);
   /*
    * Loading state.
    */
@@ -63,10 +67,35 @@ function Dashboard() {
   /*
    * Temporary/current compartment selection.
    */
-  const [
-    selectedCompartmentIds,
-    setSelectedCompartmentIds,
-  ] = useState<string[]>([]);
+const [
+  selectedCompartmentIds,
+  setSelectedCompartmentIds,
+] = useState<string[]>(() => {
+
+  const saved =
+    localStorage.getItem(
+      "medivo:selectedCompartments"
+    );
+
+  if (!saved) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return [];
+  }
+});
+
+useEffect(() => {
+  localStorage.setItem(
+    "medivo:selectedCompartments",
+    JSON.stringify(
+      selectedCompartmentIds
+    )
+  );
+}, [selectedCompartmentIds]);
 
   /*
    * Bottom sheet state.
@@ -75,6 +104,8 @@ function Dashboard() {
     isSheetOpen,
     setIsSheetOpen,
   ] = useState(false);
+
+
 
   /*
    * Load medications from PostgreSQL.
@@ -122,47 +153,50 @@ function Dashboard() {
   /*
    * Calculate occupied physical cells.
    */
-  const occupiedCompartmentIds =
-    useMemo(() => {
-      return new Set(
-        medications
-          .filter(
-            (medication) =>
-              medication.isActive
-          )
-          .flatMap(
-            (medication) =>
-              medication.compartmentIds
-          )
-      );
-    }, [medications]);
+ const occupiedCompartmentIds =
+  useMemo(() => {
+
+    return new Set(
+      medications
+        .filter(
+          (medication) =>
+            medication.isActive
+        )
+        .flatMap(
+          (medication) =>
+            medication.compartmentIds
+        )
+    );
+
+  }, [medications]);
 
   /*
    * Select / unselect compartment.
    */
-  const toggleCompartment = (
-    compartmentId: string
-  ) => {
-    setSelectedCompartmentIds(
-      (currentIds) => {
-        if (
-          currentIds.includes(
-            compartmentId
-          )
-        ) {
-          return currentIds.filter(
-            (id) =>
-              id !== compartmentId
-          );
-        }
+const toggleCompartment = (
+  compartmentId: string
+) => {
+  setSelectedCompartmentIds(
+    (currentIds) => {
 
-        return [
-          ...currentIds,
-          compartmentId,
-        ];
+      if (
+        currentIds.includes(
+          compartmentId
+        )
+      ) {
+        return currentIds.filter(
+          (id) =>
+            id !== compartmentId
+        );
       }
-    );
-  };
+
+      return [
+        ...currentIds,
+        compartmentId,
+      ];
+    }
+  );
+};
 
   /*
    * Next button.
@@ -175,6 +209,7 @@ function Dashboard() {
     }
 
     setError(null);
+    setEditingMedication(null);
     setIsSheetOpen(true);
   };
 
@@ -225,6 +260,10 @@ function Dashboard() {
        */
       setSelectedCompartmentIds([]);
 
+      localStorage.removeItem(
+        "medivo:selectedCompartments"
+      );
+
       /*
        * Close bottom sheet.
        */
@@ -255,6 +294,18 @@ function Dashboard() {
       setIsSaving(false);
     }
   };
+
+const handleEditMedication = (
+  medication: MedicationAssignment
+) => {
+
+  setEditingMedication(
+    medication
+  );
+
+
+  setIsSheetOpen(true);
+};
 
   /*
    * Logout.
@@ -324,6 +375,8 @@ const handleFinishMedication = async (
         : "Failed to finish medication."
     );
   }
+
+ 
 };
 
   return (
@@ -475,10 +528,11 @@ const handleFinishMedication = async (
 
               {/* Saved medicines */}
 
-             <MedicationList
-                medications={medications}
-                onFinish={handleFinishMedication}
-              />
+            <MedicationList
+              medications={activeMedications}
+              onFinish={handleFinishMedication}
+              onEdit={handleEditMedication}
+            />
 
             </div>
 
@@ -536,6 +590,7 @@ const handleFinishMedication = async (
         onSave={
           handleSaveMedication
         }
+         editingMedication={editingMedication}
       />
 
     </div>

@@ -7,9 +7,16 @@ const API_BASE_URL = "";
 
 export interface CreateMedicationRequest {
   medicineName: string;
+
+  /*
+   * Frontend uses C01, C02, C03...
+   */
   compartmentIds: string[];
+
   days: Day[];
+
   hour: number;
+
   minute: number;
 }
 
@@ -55,10 +62,12 @@ export async function getMedications(): Promise<
   }
 
   if (!response.ok) {
-    const errorText = await response.text();
+    const errorText =
+      await response.text();
 
     throw new Error(
-      errorText || "Failed to load medications."
+      errorText ||
+        "Failed to load medications."
     );
   }
 
@@ -67,18 +76,23 @@ export async function getMedications(): Promise<
 
 export async function createMedication(
   request: CreateMedicationRequest
-): Promise<void> {
-  const csrfToken = await getCsrfToken();
+): Promise<MedicationAssignment> {
+
+  const csrfToken =
+    await getCsrfToken();
 
   const response = await fetch(
     `${API_BASE_URL}/api/medications`,
     {
       method: "POST",
+
       credentials: "include",
+
       headers: {
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": csrfToken,
       },
+
       body: JSON.stringify(request),
     }
   );
@@ -88,24 +102,32 @@ export async function createMedication(
   }
 
   if (!response.ok) {
-    const errorText = await response.text();
+    const errorText =
+      await response.text();
 
     throw new Error(
-      errorText || "Failed to save medication."
+      errorText ||
+        "Failed to save medication."
     );
   }
+
+  return response.json();
 }
 
 export async function deleteMedication(
   id: string
 ): Promise<void> {
-  const csrfToken = await getCsrfToken();
+
+  const csrfToken =
+    await getCsrfToken();
 
   const response = await fetch(
     `${API_BASE_URL}/api/medications/${id}`,
     {
       method: "DELETE",
+
       credentials: "include",
+
       headers: {
         "X-XSRF-TOKEN": csrfToken,
       },
@@ -117,16 +139,20 @@ export async function deleteMedication(
   }
 
   if (!response.ok) {
-    const errorText = await response.text();
+    const errorText =
+      await response.text();
 
     throw new Error(
-      errorText || "Failed to delete medication."
+      errorText ||
+        "Failed to delete medication."
     );
   }
 }
+
 export async function finishMedication(
   id: string
 ): Promise<void> {
+
   const csrfToken =
     await getCsrfToken();
 
@@ -134,7 +160,9 @@ export async function finishMedication(
     `${API_BASE_URL}/api/medications/${id}`,
     {
       method: "DELETE",
+
       credentials: "include",
+
       headers: {
         "X-XSRF-TOKEN": csrfToken,
       },
