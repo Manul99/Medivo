@@ -2,10 +2,10 @@ import type { Compartment } from "../interfaces/compartment.interface";
 
 interface MedicineBoxGridProps {
   compartments: Compartment[];
-  selectedCompartmentIds: string[];
-  occupiedCompartmentIds: Set<string>;
+  selectedCompartmentIds: number[];
+  occupiedCompartmentIds: Set<number>;
   onToggleCompartment: (
-    compartmentId: string,
+    compartmentId: number,
   ) => void;
 }
 

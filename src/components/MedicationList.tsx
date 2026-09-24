@@ -4,19 +4,58 @@ import type {
   MedicationAssignment,
 } from "../interfaces/medication.interface";
 
-
 interface MedicationListProps {
   medications: MedicationAssignment[];
 
   onFinish: (
     id: string
   ) => void;
+
+  onEdit: (
+    medication: MedicationAssignment
+  ) => void;
 }
 
+/*
+ * ==========================================
+ * FORMAT TIME
+ * ==========================================
+ *
+ * Backend returns time as:
+ *
+ * "09:30"
+ *
+ * or possibly:
+ *
+ * "09.30"
+ *
+ * This function supports both.
+ */
 function formatTime(
-  hour: number,
-  minute: number
+  time: string
 ): string {
+
+  const normalizedTime =
+    time.replace(".", ":");
+
+  const [
+    hourText,
+    minuteText,
+  ] = normalizedTime.split(":");
+
+  const hour =
+    Number(hourText);
+
+  const minute =
+    Number(minuteText);
+
+  if (
+    Number.isNaN(hour) ||
+    Number.isNaN(minute)
+  ) {
+    return time;
+  }
+
   const date = new Date();
 
   date.setHours(
@@ -38,10 +77,15 @@ function formatTime(
 export default function MedicationList({
   medications,
   onFinish,
+  onEdit,
 }: MedicationListProps) {
+
   /*
-   * Empty state
+   * ==========================================
+   * EMPTY STATE
+   * ==========================================
    */
+
   if (medications.length === 0) {
     return (
       <section className="medications-card empty-card">
@@ -64,8 +108,11 @@ export default function MedicationList({
   }
 
   /*
-   * Medication list
+   * ==========================================
+   * MEDICATION LIST
+   * ==========================================
    */
+
   return (
     <section className="medications-card">
 
@@ -100,26 +147,38 @@ export default function MedicationList({
                 key={medication.id}
               >
 
-                {/* Medicine icon */}
+                {/* ==================================
+                    MEDICINE ICON
+                    ================================== */}
+
                 <div className="medicine-icon">
                   💊
                 </div>
 
-                {/* Main information */}
+                {/* ==================================
+                    MAIN INFORMATION
+                    ================================== */}
+
                 <div className="medicine-main">
 
                   <h3>
                     {medication.medicineName}
                   </h3>
 
-                  {/* Compartments */}
+                  {/* ==================================
+                      COMPARTMENTS
+                      ================================== */}
+
                   <p className="medicine-meta">
                     {medication.compartmentIds.join(
                       " · "
                     )}
                   </p>
 
-                  {/* Schedules */}
+                  {/* ==================================
+                      SCHEDULES
+                      ================================== */}
+
                   <div className="medicine-details">
 
                     {medication.schedules.map(
@@ -135,7 +194,7 @@ export default function MedicationList({
 
                         return (
                           <div
-                            key={`${medication.id}-${schedule.day}`}
+                            key={`${medication.id}-${schedule.day}-${schedule.time}`}
                           >
 
                             <span>
@@ -148,8 +207,7 @@ export default function MedicationList({
 
                             <span>
                               {formatTime(
-                                schedule.hour,
-                                schedule.minute
+                                schedule.time
                               )}
                             </span>
 
@@ -162,18 +220,37 @@ export default function MedicationList({
 
                 </div>
 
-                {/* Finish button */}
-                <button
-                  className="finish-button"
-                  type="button"
-                  onClick={() =>
-                    onFinish(
-                      medication.id
-                    )
-                  }
-                >
-                  Finish
-                </button>
+                {/* ==================================
+                    FINISH BUTTON
+                    ================================== */}
+
+                <div className="medication-actions">
+
+                  {/* EDIT */}
+                  <button
+                    className="edit-button"
+                    type="button"
+                    onClick={() =>
+                      onEdit(medication)
+                    }
+                  >
+                    Edit
+                  </button>
+
+                  {/* FINISH */}
+                  <button
+                    className="finish-button"
+                    type="button"
+                    onClick={() =>
+                      onFinish(
+                        medication.id
+                      )
+                    }
+                  >
+                    Finish
+                  </button>
+
+                </div>
 
               </article>
             );

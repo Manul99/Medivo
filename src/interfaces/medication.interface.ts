@@ -9,16 +9,32 @@ export type Day =
 
 export interface MedicationSchedule {
   day: Day;
-  hour: number;
-  minute: number;
+  time: string;
 }
 
 export interface MedicationAssignment {
   id: string;
+
   medicineName: string;
+
+  /*
+   * Physical compartment IDs used by the frontend.
+   *
+   * Example:
+   * C01
+   * C02
+   * C03
+   */
   compartmentIds: string[];
+
+  /*
+   * Medication schedules returned by the backend.
+   */
   schedules: MedicationSchedule[];
+
   isActive: boolean;
+
   createdAtUtc: string;
+
   updatedAtUtc: string;
 }

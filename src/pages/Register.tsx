@@ -21,6 +21,7 @@ export default function Register({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [boxId, setBoxId] = useState("");
 
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>
@@ -50,6 +51,25 @@ export default function Register({
       return;
     }
 
+    if (!boxId.trim()) {
+  setError("Medicine Box ID / MAC address is required.");
+  return;
+}
+
+    const normalizedBoxId = boxId
+      .trim()
+      .toUpperCase();
+
+    const macAddressRegex =
+      /^([0-9A-F]{2}:){5}[0-9A-F]{2}$/;
+
+    if (!macAddressRegex.test(normalizedBoxId)) {
+      setError(
+        "Invalid Box ID / MAC address. Example: 68:09:47:28:0E:B0"
+      );
+      return;
+    }
+
     if (password.length < 6) {
       setError(
         "Password must contain at least 6 characters."
@@ -71,6 +91,7 @@ export default function Register({
         email: email.trim(),
         password,
         phoneNumber: phoneNumber.trim(),
+        boxId: normalizedBoxId,
       });
 
       setSuccess(
@@ -178,6 +199,29 @@ export default function Register({
               autoComplete="tel"
             />
           </div>
+
+        <div className="form-group">
+          <label htmlFor="boxId">
+            Medicine Box ID / MAC Address
+          </label>
+
+          <input
+            id="boxId"
+            type="text"
+            value={boxId}
+            onChange={(event) =>
+              setBoxId(event.target.value.toUpperCase())
+            }
+            placeholder="68:09:47:28:0E:B0"
+            disabled={loading}
+            autoComplete="off"
+            maxLength={17}
+          />
+
+          <small>
+            Enter the MAC address shown on your Medicine Monitor box.
+          </small>
+        </div>
 
           <div className="form-group">
             <label htmlFor="password">

@@ -20,7 +20,8 @@ import type {
 import {
   createMedication,
   getMedications,
-  finishMedication
+  finishMedication,
+  updateMedication
   } from "../services/medicationSerivce";
 
 import { logoutUser } from "../services/authService";
@@ -36,6 +37,10 @@ function Dashboard() {
     setMedications,
   ] = useState<MedicationAssignment[]>([]);
 
+  const [
+  editingMedication,
+  setEditingMedication,
+] = useState<MedicationAssignment | null>(null);
   /*
    * Loading state.
    */
@@ -63,10 +68,35 @@ function Dashboard() {
   /*
    * Temporary/current compartment selection.
    */
-  const [
-    selectedCompartmentIds,
-    setSelectedCompartmentIds,
-  ] = useState<string[]>([]);
+const [
+  selectedCompartmentIds,
+  setSelectedCompartmentIds,
+] = useState<string[]>(() => {
+
+  const saved =
+    localStorage.getItem(
+      "medivo:selectedCompartments"
+    );
+
+  if (!saved) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return [];
+  }
+});
+
+useEffect(() => {
+  localStorage.setItem(
+    "medivo:selectedCompartments",
+    JSON.stringify(
+      selectedCompartmentIds
+    )
+  );
+}, [selectedCompartmentIds]);
 
   /*
    * Bottom sheet state.
@@ -75,6 +105,8 @@ function Dashboard() {
     isSheetOpen,
     setIsSheetOpen,
   ] = useState(false);
+
+
 
   /*
    * Load medications from PostgreSQL.
@@ -122,47 +154,50 @@ function Dashboard() {
   /*
    * Calculate occupied physical cells.
    */
-  const occupiedCompartmentIds =
-    useMemo(() => {
-      return new Set(
-        medications
-          .filter(
-            (medication) =>
-              medication.isActive
-          )
-          .flatMap(
-            (medication) =>
-              medication.compartmentIds
-          )
-      );
-    }, [medications]);
+ const occupiedCompartmentIds =
+  useMemo(() => {
+
+    return new Set(
+      medications
+        .filter(
+          (medication) =>
+            medication.isActive
+        )
+        .flatMap(
+          (medication) =>
+            medication.compartmentIds
+        )
+    );
+
+  }, [medications]);
 
   /*
    * Select / unselect compartment.
    */
-  const toggleCompartment = (
-    compartmentId: string
-  ) => {
-    setSelectedCompartmentIds(
-      (currentIds) => {
-        if (
-          currentIds.includes(
-            compartmentId
-          )
-        ) {
-          return currentIds.filter(
-            (id) =>
-              id !== compartmentId
-          );
-        }
+const toggleCompartment = (
+  compartmentId: string
+) => {
+  setSelectedCompartmentIds(
+    (currentIds) => {
 
-        return [
-          ...currentIds,
-          compartmentId,
-        ];
+      if (
+        currentIds.includes(
+          compartmentId
+        )
+      ) {
+        return currentIds.filter(
+          (id) =>
+            id !== compartmentId
+        );
       }
-    );
-  };
+
+      return [
+        ...currentIds,
+        compartmentId,
+      ];
+    }
+  );
+};
 
   /*
    * Next button.
@@ -175,6 +210,7 @@ function Dashboard() {
     }
 
     setError(null);
+    setEditingMedication(null);
     setIsSheetOpen(true);
   };
 
@@ -182,36 +218,96 @@ function Dashboard() {
    * Save medication to PostgreSQL.
    */
   const handleSaveMedication = async (
-    data: {
-      medicineName: string;
-      days: Day[];
-      hour: number;
-      minute: number;
+  data: {
+    medicineName: string;
+    days: Day[];
+    hour: number;
+    minute: number;
+  }
+) => {
+  /*
+   * ==========================================
+   * GET COMPARTMENTS
+   * ==========================================
+   */
+
+  const compartmentIds =
+    editingMedication
+      ? editingMedication.compartmentIds
+      : selectedCompartmentIds;
+
+  if (compartmentIds.length === 0) {
+    setError(
+      "Please select at least one compartment."
+    );
+
+    return;
+  }
+
+  try {
+    setIsSaving(true);
+    setError(null);
+
+    /*
+     * ==========================================
+     * UPDATE EXISTING MEDICATION
+     * ==========================================
+     */
+
+    if (editingMedication) {
+
+      await updateMedication(
+        editingMedication.id,
+        {
+          medicineName:
+            data.medicineName,
+
+          compartmentIds,
+
+          days:
+            data.days,
+
+          hour:
+            data.hour,
+
+          minute:
+            data.minute,
+        }
+      );
+
     }
-  ) => {
-    if (
-      selectedCompartmentIds.length === 0
-    ) {
-      return;
+
+    /*
+     * ==========================================
+     * CREATE NEW MEDICATION
+     * ==========================================
+     */
+
+    else {
+
+      await createMedication({
+        medicineName:
+          data.medicineName,
+
+        compartmentIds,
+
+        days:
+          data.days,
+
+        hour:
+          data.hour,
+
+        minute:
+          data.minute,
+      });
+
     }
 
-    try {
-      setIsSaving(true);
-      setError(null);
-
-     await createMedication({
-      medicineName: data.medicineName,
-
-      compartmentIds: [
-        ...selectedCompartmentIds,
-      ],
-
-      days: data.days,
-
-      hour: data.hour,
-
-      minute: data.minute,
-    });
+    /*
+     * ==========================================
+     * REFRESH MEDICATIONS
+     * ==========================================
+     */
 
     const updatedMedications =
       await getMedications();
@@ -220,41 +316,69 @@ function Dashboard() {
       updatedMedications
     );
 
-      /*
-       * Clear selection.
-       */
-      setSelectedCompartmentIds([]);
+    /*
+     * ==========================================
+     * RESET STATE
+     * ==========================================
+     */
 
-      /*
-       * Close bottom sheet.
-       */
-      setIsSheetOpen(false);
-    } catch (err) {
-      console.error(
-        "Failed to save medication:",
-        err
-      );
+    setSelectedCompartmentIds([]);
 
-      if (
-        err instanceof Error &&
-        err.message === "UNAUTHORIZED"
-      ) {
-        navigate("/login", {
+    localStorage.removeItem(
+      "medivo:selectedCompartments"
+    );
+
+    setEditingMedication(null);
+
+    setIsSheetOpen(false);
+
+  } catch (err) {
+
+    console.error(
+      "Failed to save medication:",
+      err
+    );
+
+    if (
+      err instanceof Error &&
+      err.message === "UNAUTHORIZED"
+    ) {
+      navigate(
+        "/login",
+        {
           replace: true,
-        });
-
-        return;
-      }
-
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to save medication."
+        }
       );
-    } finally {
-      setIsSaving(false);
+
+      return;
     }
-  };
+
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Failed to save medication."
+    );
+
+  } finally {
+
+    setIsSaving(false);
+  }
+};
+
+const handleEditMedication = (
+  medication: MedicationAssignment
+) => {
+
+  setEditingMedication(
+    medication
+  );
+
+  setSelectedCompartmentIds(
+    medication.compartmentIds
+  );
+
+  setIsSheetOpen(true);
+};
 
   /*
    * Logout.
@@ -324,6 +448,8 @@ const handleFinishMedication = async (
         : "Failed to finish medication."
     );
   }
+
+ 
 };
 
   return (
@@ -356,25 +482,33 @@ const handleFinishMedication = async (
 
         </div>
 
-        <div className="topbar-actions">
+       <div className="topbar-actions">
 
-          <div className="connection-status">
+        <div className="connection-status">
 
-            <span className="status-dot" />
+          <span className="status-dot" />
 
-            Box ready
-
-          </div>
-
-          <button
-            type="button"
-            className="logout-button"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          Box ready
 
         </div>
+
+        <button
+          type="button"
+          className="medical-documents-button"
+          onClick={() => navigate("/medical-documents")}
+        >
+          Medical Documents
+        </button>
+
+        <button
+          type="button"
+          className="logout-button"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
+      </div>
 
       </header>
 
@@ -475,10 +609,11 @@ const handleFinishMedication = async (
 
               {/* Saved medicines */}
 
-             <MedicationList
-                medications={medications}
-                onFinish={handleFinishMedication}
-              />
+            <MedicationList
+              medications={activeMedications}
+              onFinish={handleFinishMedication}
+              onEdit={handleEditMedication}
+            />
 
             </div>
 
@@ -536,6 +671,7 @@ const handleFinishMedication = async (
         onSave={
           handleSaveMedication
         }
+         editingMedication={editingMedication}
       />
 
     </div>

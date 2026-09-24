@@ -16,6 +16,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   phoneNumber: string;
+  boxId: string;
 }
 
 export interface UserProfileResponse {
@@ -107,6 +108,7 @@ async function createUserProfile(
         firstName: request.firstName,
         lastName: request.lastName,
         phoneNumber: request.phoneNumber,
+        boxId: request.boxId,
       }),
     }
   );
