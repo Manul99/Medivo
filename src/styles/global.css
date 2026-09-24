@@ -2116,3 +2116,1576 @@ button:disabled {
 .edit-button:hover {
   background: #f5f7fa;
 }
+
+/* =========================================================
+   MEDICAL DOCUMENTS
+   Complete responsive styling
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.medical-documents-page {
+  min-height: 100vh;
+
+  box-sizing: border-box;
+
+  padding: 40px 24px 60px;
+
+  background: #f7f9fc;
+}
+
+.medical-documents-container {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.medical-documents-header {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  width: 100%;
+
+  margin: 0 auto 28px;
+}
+
+.medical-documents-title-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 13px;
+
+  background: #eaf2ff;
+
+  color: #2563eb;
+
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.medical-documents-header h1 {
+  margin: 0 0 5px;
+
+  color: #172033;
+
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.medical-documents-header p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   UPLOAD CARD
+   ========================================================= */
+
+.medical-document-upload {
+  width: 100%;
+  max-width: 760px;
+
+  box-sizing: border-box;
+
+  margin: 0 auto 40px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf0;
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 20px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =========================================================
+   UPLOAD HEADER
+   ========================================================= */
+
+.medical-upload-header {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  margin-bottom: 28px;
+}
+
+.medical-upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 12px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.medical-upload-header h2 {
+  margin: 0 0 5px;
+
+  color: #172033;
+
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.medical-upload-header p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   UPLOAD FORM
+   ========================================================= */
+
+.medical-document-form {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px 18px;
+}
+
+.medical-document-field {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  gap: 7px;
+}
+
+.medical-document-field-full {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   FORM LABELS
+   ========================================================= */
+
+.medical-document-field label {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #344054;
+
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.optional-label {
+  color: #98a2b3;
+
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+   ========================================================= */
+
+.medical-document-field input,
+.medical-document-field select,
+.medical-document-field textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.medical-document-field input,
+.medical-document-field select {
+  height: 44px;
+}
+
+.medical-document-field textarea {
+  min-height: 105px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+.medical-document-field input::placeholder,
+.medical-document-field textarea::placeholder {
+  color: #98a2b3;
+}
+
+.medical-document-field input:hover,
+.medical-document-field select:hover,
+.medical-document-field textarea:hover {
+  border-color: #98a2b3;
+}
+
+.medical-document-field input:focus,
+.medical-document-field select:focus,
+.medical-document-field textarea:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.medical-document-field input:disabled,
+.medical-document-field select:disabled,
+.medical-document-field textarea:disabled {
+  background: #f9fafb;
+
+  color: #98a2b3;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   FILE DROPZONE
+   ========================================================= */
+
+.medical-file-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 190px;
+
+  box-sizing: border-box;
+
+  padding: 24px;
+
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+
+  background: #f8fafc;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.medical-file-dropzone:hover {
+  border-color: #2563eb;
+
+  background: #f5f9ff;
+}
+
+.medical-file-dropzone:focus-visible {
+  outline: 2px solid #2563eb;
+
+  outline-offset: 2px;
+}
+
+.medical-file-dropzone.has-file {
+  min-height: 110px;
+
+  border-style: solid;
+
+  border-color: #bfdbfe;
+
+  background: #f8fbff;
+}
+
+
+/* =========================================================
+   FILE UPLOAD ICON
+   ========================================================= */
+
+.file-upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  margin-bottom: 12px;
+
+  border-radius: 50%;
+
+  background: #eaf2ff;
+
+  color: #2563eb;
+
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.file-upload-title {
+  color: #344054;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.file-upload-subtitle {
+  margin-top: 4px;
+
+  color: #667085;
+
+  font-size: 13px;
+}
+
+.file-upload-types {
+  display: flex;
+  gap: 6px;
+
+  margin-top: 12px;
+
+  color: #98a2b3;
+
+  font-size: 12px;
+}
+
+.file-upload-types span::before {
+  content: "•";
+
+  margin-right: 6px;
+}
+
+
+/* =========================================================
+   SELECTED FILE
+   ========================================================= */
+
+.selected-file {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  gap: 12px;
+}
+
+.selected-file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 9px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.selected-file-info {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  flex: 1;
+
+  text-align: left;
+}
+
+.selected-file-info strong {
+  overflow: hidden;
+
+  color: #344054;
+
+  font-size: 14px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected-file-info span {
+  margin-top: 3px;
+
+  color: #98a2b3;
+
+  font-size: 12px;
+}
+
+.remove-file-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease;
+}
+
+.remove-file-button:hover {
+  background: #fee2e2;
+}
+
+.remove-file-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.medical-document-error {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+
+  background: #fff7f7;
+
+  color: #b42318;
+}
+
+.medical-document-error > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: #fee2e2;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.medical-document-error p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   UPLOAD ACTION
+   ========================================================= */
+
+.medical-upload-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  grid-column: 1 / -1;
+
+  padding-top: 4px;
+}
+
+.medical-document-upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 170px;
+  min-height: 44px;
+
+  gap: 8px;
+
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.medical-document-upload-button:hover:not(:disabled) {
+  background: #1d4ed8;
+
+  box-shadow:
+    0 5px 12px rgba(37, 99, 235, 0.2);
+}
+
+.medical-document-upload-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.medical-document-upload-button:disabled {
+  background: #cbd5e1;
+
+  color: #ffffff;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   UPLOAD SPINNER
+   ========================================================= */
+
+.upload-spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation:
+    medical-upload-spin 0.7s linear infinite;
+}
+
+@keyframes medical-upload-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   DOCUMENT LIST
+   ========================================================= */
+
+.medical-document-list {
+  width: 100%;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   DOCUMENT LIST HEADER
+   ========================================================= */
+
+.medical-document-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.medical-document-list-header h2 {
+  margin: 0 0 4px;
+
+  color: #172033;
+
+  font-size: 21px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.medical-document-list-header p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 13px;
+}
+
+.document-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 34px;
+  height: 34px;
+
+  padding: 0 10px;
+
+  border-radius: 20px;
+
+  background: #eaf2ff;
+
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   DOCUMENT GRID
+   ========================================================= */
+
+.medical-document-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   DOCUMENT CARD
+   ========================================================= */
+
+.medical-document-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.035);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.medical-document-card:hover {
+  border-color: #cbd5e1;
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.07);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DOCUMENT CARD HEADER
+   ========================================================= */
+
+.medical-document-card-header {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 17px;
+}
+
+.medical-file-type-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   FILE TYPE COLORS
+   ========================================================= */
+
+.medical-file-type-icon.prescription {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.medical-file-type-icon.lab-report {
+  background: #ecfdf3;
+
+  color: #15803d;
+}
+
+.medical-file-type-icon.medical-report {
+  background: #f5f3ff;
+
+  color: #7c3aed;
+}
+
+.medical-file-type-icon.scan {
+  background: #fff7ed;
+
+  color: #ea580c;
+}
+
+.medical-file-type-icon.other {
+  background: #f3f4f6;
+
+  color: #475569;
+}
+
+
+/* =========================================================
+   DOCUMENT TITLE
+   ========================================================= */
+
+.medical-document-card-title {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.medical-document-card-title h3 {
+  overflow: hidden;
+
+  margin: 1px 0 7px;
+
+  color: #172033;
+
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DOCUMENT TYPE BADGE
+   ========================================================= */
+
+.medical-document-type {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  border-radius: 6px;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.medical-document-type.prescription {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.medical-document-type.lab-report {
+  background: #ecfdf3;
+
+  color: #15803d;
+}
+
+.medical-document-type.medical-report {
+  background: #f5f3ff;
+
+  color: #7c3aed;
+}
+
+.medical-document-type.scan {
+  background: #fff7ed;
+
+  color: #c2410c;
+}
+
+.medical-document-type.other {
+  background: #f3f4f6;
+
+  color: #475569;
+}
+
+
+/* =========================================================
+   FILE NAME
+   ========================================================= */
+
+.medical-document-file-name {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  min-width: 0;
+
+  margin-bottom: 17px;
+
+  padding: 9px 10px;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+
+  color: #667085;
+
+  font-size: 12px;
+}
+
+.medical-document-file-name span:last-child {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.file-name-icon {
+  color: #94a3b8;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   DOCUMENT META
+   ========================================================= */
+
+.medical-document-meta {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid #eef1f5;
+}
+
+.medical-document-meta-item {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.medical-document-meta-item span {
+  color: #98a2b3;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.medical-document-meta-item strong {
+  color: #344054;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   DOCUMENT DESCRIPTION
+   ========================================================= */
+
+.medical-document-description {
+  min-height: 42px;
+
+  margin-top: 13px;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  background: #fafafa;
+}
+
+.medical-document-description p {
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+
+/* =========================================================
+   DOCUMENT ACTIONS
+   ========================================================= */
+
+.medical-document-actions {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 9px;
+
+  margin-top: auto;
+
+  padding-top: 17px;
+}
+
+.document-view-button,
+.document-delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+
+  gap: 6px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+/* View */
+
+.document-view-button {
+  border: 1px solid #bfdbfe;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.document-view-button:hover:not(:disabled) {
+  background: #dbeafe;
+
+  border-color: #93c5fd;
+}
+
+
+/* Delete */
+
+.document-delete-button {
+  border: 1px solid #fecaca;
+
+  background: #fff7f7;
+
+  color: #dc2626;
+}
+
+.document-delete-button:hover:not(:disabled) {
+  background: #fee2e2;
+
+  border-color: #fca5a5;
+}
+
+.document-view-button:disabled,
+.document-delete-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   BUTTON SPINNER
+   ========================================================= */
+
+.button-spinner {
+  width: 12px;
+  height: 12px;
+
+  border: 2px solid rgba(37, 99, 235, 0.25);
+
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation:
+    document-button-spin 0.7s linear infinite;
+}
+
+.delete-spinner {
+  border-color: rgba(220, 38, 38, 0.2);
+
+  border-top-color: #dc2626;
+}
+
+@keyframes document-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   EMPTY DOCUMENT STATE
+   ========================================================= */
+
+.medical-documents-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 220px;
+
+  box-sizing: border-box;
+
+  padding: 30px;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+.empty-document-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  margin-bottom: 12px;
+
+  border-radius: 50%;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 27px;
+}
+
+.medical-documents-empty h3 {
+  margin: 0 0 6px;
+
+  color: #344054;
+
+  font-size: 16px;
+}
+
+.medical-documents-empty p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.medical-documents-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 120px;
+
+  color: #667085;
+
+  font-size: 14px;
+}
+
+.medical-loading-spinner {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #dbeafe;
+
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation:
+    document-button-spin 0.7s linear infinite;
+}
+
+
+/* =========================================================
+   MEDICAL DOCUMENTS NAVIGATION BUTTON
+   ========================================================= */
+
+.medical-documents-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 40px;
+
+  padding: 0 16px;
+
+  border: 1px solid #d9e2ec;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #243447;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.medical-documents-button:hover {
+  background: #f4f8fb;
+
+  border-color: #b9c9d8;
+
+  color: #1d4ed8;
+
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.medical-documents-button:active {
+  transform: translateY(1px);
+}
+
+.medical-documents-button:focus-visible {
+  outline: 2px solid #2563eb;
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .medical-documents-page {
+    padding: 28px 18px 45px;
+  }
+
+  .medical-documents-container {
+    max-width: 100%;
+  }
+
+  .medical-documents-header h1 {
+    font-size: 26px;
+  }
+
+  .medical-document-form {
+    grid-template-columns: 1fr;
+  }
+
+  .medical-document-field-full {
+    grid-column: auto;
+  }
+
+  .medical-upload-actions {
+    grid-column: auto;
+  }
+
+  .medical-document-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .medical-documents-page {
+    padding: 20px 12px 40px;
+  }
+
+  .medical-documents-header {
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+  }
+
+  .medical-documents-title-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+
+    font-size: 23px;
+  }
+
+  .medical-documents-header h1 {
+    font-size: 22px;
+  }
+
+  .medical-documents-header p {
+    font-size: 13px;
+  }
+
+  .medical-document-upload {
+    padding: 18px 16px;
+
+    margin-bottom: 30px;
+
+    border-radius: 12px;
+  }
+
+  .medical-upload-header {
+    gap: 11px;
+
+    margin-bottom: 22px;
+  }
+
+  .medical-upload-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+
+    font-size: 22px;
+  }
+
+  .medical-upload-header h2 {
+    font-size: 18px;
+  }
+
+  .medical-upload-header p {
+    font-size: 13px;
+  }
+
+  .medical-document-form {
+    gap: 16px;
+  }
+
+  .medical-document-field input,
+  .medical-document-field select {
+    height: 46px;
+  }
+
+  .medical-file-dropzone {
+    min-height: 170px;
+
+    padding: 18px;
+  }
+
+  .file-upload-title {
+    font-size: 14px;
+  }
+
+  .file-upload-subtitle {
+    font-size: 12px;
+  }
+
+  .file-upload-types {
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+  .file-upload-types span::before {
+    display: none;
+  }
+
+  .selected-file {
+    gap: 9px;
+  }
+
+  .selected-file-info strong {
+    max-width: 180px;
+  }
+
+  .medical-upload-actions {
+    width: 100%;
+  }
+
+  .medical-document-upload-button {
+    width: 100%;
+  }
+
+  .medical-document-list-header h2 {
+    font-size: 19px;
+  }
+
+  .medical-document-card {
+    padding: 16px;
+  }
+
+  .medical-document-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .medical-documents-page {
+    padding: 12px 8px 35px;
+  }
+
+  .medical-document-upload {
+    padding: 16px 12px;
+  }
+
+  .medical-documents-header h1 {
+    font-size: 20px;
+  }
+
+  .medical-upload-header h2 {
+    font-size: 17px;
+  }
+
+  .medical-file-dropzone {
+    min-height: 155px;
+
+    padding: 14px;
+  }
+
+  .selected-file-info strong {
+    max-width: 130px;
+  }
+
+  .medical-document-card {
+    padding: 14px;
+  }
+
+  .medical-document-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .medical-document-upload-button {
+    min-width: 0;
+
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .medical-document-card,
+  .medical-document-upload-button,
+  .medical-documents-button,
+  .medical-file-dropzone {
+    transition: none;
+  }
+
+  .upload-spinner,
+  .button-spinner,
+  .medical-loading-spinner {
+    animation: none;
+  }
+
+}
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.back-to-dashboard-button {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 20px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #667085;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.back-to-dashboard-button span {
+  font-size: 18px;
+
+  line-height: 1;
+}
+
+.back-to-dashboard-button:hover {
+  color: #2563eb;
+
+  transform: translateX(-2px);
+}
+
+.back-to-dashboard-button:focus-visible {
+  outline: 2px solid #2563eb;
+
+  outline-offset: 4px;
+
+  border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+
+  .back-to-dashboard-button {
+    margin-bottom: 16px;
+
+    font-size: 13px;
+  }
+
+}

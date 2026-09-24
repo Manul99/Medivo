@@ -8,6 +8,7 @@ import {
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import MedicalDocuments from "./pages/MedicalDocuments";
 
 function App() {
   return (
@@ -42,6 +43,12 @@ function App() {
           path="/dashboard"
           element={<Dashboard />}
         />
+        <Route
+        path="/medical-documents"
+        element={
+          <MedicalDocuments />
+        }
+/>
 
         {/* Unknown URL */}
         <Route

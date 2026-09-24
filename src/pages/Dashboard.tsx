@@ -20,7 +20,8 @@ import type {
 import {
   createMedication,
   getMedications,
-  finishMedication
+  finishMedication,
+  updateMedication
   } from "../services/medicationSerivce";
 
 import { logoutUser } from "../services/authService";
@@ -217,36 +218,96 @@ const toggleCompartment = (
    * Save medication to PostgreSQL.
    */
   const handleSaveMedication = async (
-    data: {
-      medicineName: string;
-      days: Day[];
-      hour: number;
-      minute: number;
+  data: {
+    medicineName: string;
+    days: Day[];
+    hour: number;
+    minute: number;
+  }
+) => {
+  /*
+   * ==========================================
+   * GET COMPARTMENTS
+   * ==========================================
+   */
+
+  const compartmentIds =
+    editingMedication
+      ? editingMedication.compartmentIds
+      : selectedCompartmentIds;
+
+  if (compartmentIds.length === 0) {
+    setError(
+      "Please select at least one compartment."
+    );
+
+    return;
+  }
+
+  try {
+    setIsSaving(true);
+    setError(null);
+
+    /*
+     * ==========================================
+     * UPDATE EXISTING MEDICATION
+     * ==========================================
+     */
+
+    if (editingMedication) {
+
+      await updateMedication(
+        editingMedication.id,
+        {
+          medicineName:
+            data.medicineName,
+
+          compartmentIds,
+
+          days:
+            data.days,
+
+          hour:
+            data.hour,
+
+          minute:
+            data.minute,
+        }
+      );
+
     }
-  ) => {
-    if (
-      selectedCompartmentIds.length === 0
-    ) {
-      return;
+
+    /*
+     * ==========================================
+     * CREATE NEW MEDICATION
+     * ==========================================
+     */
+
+    else {
+
+      await createMedication({
+        medicineName:
+          data.medicineName,
+
+        compartmentIds,
+
+        days:
+          data.days,
+
+        hour:
+          data.hour,
+
+        minute:
+          data.minute,
+      });
+
     }
 
-    try {
-      setIsSaving(true);
-      setError(null);
-
-     await createMedication({
-      medicineName: data.medicineName,
-
-      compartmentIds: [
-        ...selectedCompartmentIds,
-      ],
-
-      days: data.days,
-
-      hour: data.hour,
-
-      minute: data.minute,
-    });
+    /*
+     * ==========================================
+     * REFRESH MEDICATIONS
+     * ==========================================
+     */
 
     const updatedMedications =
       await getMedications();
@@ -255,45 +316,54 @@ const toggleCompartment = (
       updatedMedications
     );
 
-      /*
-       * Clear selection.
-       */
-      setSelectedCompartmentIds([]);
+    /*
+     * ==========================================
+     * RESET STATE
+     * ==========================================
+     */
 
-      localStorage.removeItem(
-        "medivo:selectedCompartments"
-      );
+    setSelectedCompartmentIds([]);
 
-      /*
-       * Close bottom sheet.
-       */
-      setIsSheetOpen(false);
-    } catch (err) {
-      console.error(
-        "Failed to save medication:",
-        err
-      );
+    localStorage.removeItem(
+      "medivo:selectedCompartments"
+    );
 
-      if (
-        err instanceof Error &&
-        err.message === "UNAUTHORIZED"
-      ) {
-        navigate("/login", {
+    setEditingMedication(null);
+
+    setIsSheetOpen(false);
+
+  } catch (err) {
+
+    console.error(
+      "Failed to save medication:",
+      err
+    );
+
+    if (
+      err instanceof Error &&
+      err.message === "UNAUTHORIZED"
+    ) {
+      navigate(
+        "/login",
+        {
           replace: true,
-        });
-
-        return;
-      }
-
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to save medication."
+        }
       );
-    } finally {
-      setIsSaving(false);
+
+      return;
     }
-  };
+
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Failed to save medication."
+    );
+
+  } finally {
+
+    setIsSaving(false);
+  }
+};
 
 const handleEditMedication = (
   medication: MedicationAssignment
@@ -303,6 +373,9 @@ const handleEditMedication = (
     medication
   );
 
+  setSelectedCompartmentIds(
+    medication.compartmentIds
+  );
 
   setIsSheetOpen(true);
 };
@@ -409,25 +482,33 @@ const handleFinishMedication = async (
 
         </div>
 
-        <div className="topbar-actions">
+       <div className="topbar-actions">
 
-          <div className="connection-status">
+        <div className="connection-status">
 
-            <span className="status-dot" />
+          <span className="status-dot" />
 
-            Box ready
-
-          </div>
-
-          <button
-            type="button"
-            className="logout-button"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          Box ready
 
         </div>
+
+        <button
+          type="button"
+          className="medical-documents-button"
+          onClick={() => navigate("/medical-documents")}
+        >
+          Medical Documents
+        </button>
+
+        <button
+          type="button"
+          className="logout-button"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
+      </div>
 
       </header>
 

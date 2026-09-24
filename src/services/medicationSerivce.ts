@@ -183,3 +183,44 @@ export async function finishMedication(
     );
   }
 }
+
+export async function updateMedication(
+  id: string,
+  request: CreateMedicationRequest
+): Promise<MedicationAssignment> {
+
+  const csrfToken =
+    await getCsrfToken();
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/medications/${id}`,
+    {
+      method: "PUT",
+
+      credentials: "include",
+
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": csrfToken,
+      },
+
+      body: JSON.stringify(request),
+    }
+  );
+
+  if (response.status === 401) {
+    throw new Error("UNAUTHORIZED");
+  }
+
+  if (!response.ok) {
+    const errorText =
+      await response.text();
+
+    throw new Error(
+      errorText ||
+        "Failed to update medication."
+    );
+  }
+
+  return response.json();
+}
