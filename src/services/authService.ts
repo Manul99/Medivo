@@ -10,12 +10,14 @@ import { auth } from "../firebase/firebase";
 
 const API_BASE_URL = "";
 
-export interface RegisterRequest {
+interface RegisterRequest {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   phoneNumber: string;
+  dateOfBirth: string;
+  bloodType: string;
   boxId: string;
 }
 
@@ -108,6 +110,8 @@ async function createUserProfile(
         firstName: request.firstName,
         lastName: request.lastName,
         phoneNumber: request.phoneNumber,
+        dateOfBirth: request.dateOfBirth,
+        bloodType: request.bloodType,
         boxId: request.boxId,
       }),
     }

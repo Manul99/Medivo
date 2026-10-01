@@ -1,0 +1,597 @@
+/* =========================================
+   MEDIVO TOP BAR
+   ========================================= */
+
+.medivo-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #e5e7eb;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.medivo-topbar-inner {
+  width: 100%;
+  max-width: 1440px;
+
+  min-height: 72px;
+
+  margin: 0 auto;
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+}
+
+/* =========================================
+   BRAND
+   ========================================= */
+
+.medivo-topbar-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.medivo-topbar-logo {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #dbeafe;
+  border-radius: 13px;
+
+  box-shadow:
+    0 6px 16px rgba(37, 99, 235, 0.12);
+
+  overflow: hidden;
+}
+
+.medivo-topbar-logo img {
+  width: 37px;
+  height: 37px;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+.medivo-topbar-brand-text {
+  display: flex;
+  flex-direction: column;
+
+  line-height: 1;
+}
+
+.medivo-topbar-brand-name {
+  font-size: 20px;
+  font-weight: 800;
+
+  letter-spacing: -0.035em;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb 0%,
+      #0ea5e9 55%,
+      #06b6d4 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.medivo-topbar-brand-subtitle {
+  margin-top: 5px;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  color: #64748b;
+
+  letter-spacing: 0.01em;
+}
+
+/* =========================================
+   DESKTOP ACTIONS
+   ========================================= */
+
+.medivo-topbar-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* Connection */
+
+.medivo-connection-status {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-right: 5px;
+
+  padding: 8px 11px;
+
+  border-radius: 999px;
+
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+
+  color: #166534;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.medivo-status-dot {
+  width: 8px;
+  height: 8px;
+
+  flex: 0 0 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+
+/* Navigation buttons */
+
+.medivo-nav-button,
+.medivo-logout-button {
+  height: 40px;
+
+  padding: 0 14px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.medivo-nav-button {
+  color: #475569;
+
+  background: #ffffff;
+
+  border: 1px solid transparent;
+}
+
+.medivo-nav-button:hover {
+  color: #2563eb;
+
+  background: #eff6ff;
+
+  border-color: #dbeafe;
+}
+
+.medivo-nav-button.active {
+  color: #2563eb;
+
+  background: #eff6ff;
+
+  border-color: #bfdbfe;
+}
+
+.medivo-logout-button {
+  color: #dc2626;
+
+  background: #ffffff;
+
+  border: 1px solid #fecaca;
+}
+
+.medivo-logout-button:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+/* =========================================
+   MOBILE MENU BUTTON
+   ========================================= */
+
+.medivo-mobile-menu-button {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.medivo-mobile-menu-button span {
+  width: 19px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: #334155;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.medivo-mobile-menu-button.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.medivo-mobile-menu-button.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.medivo-mobile-menu-button.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =========================================
+   MOBILE OVERLAY
+   ========================================= */
+
+.medivo-mobile-menu-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1001;
+
+  background: rgba(15, 23, 42, 0.22);
+
+  backdrop-filter: blur(2px);
+}
+
+/* =========================================
+   MOBILE MENU
+   ========================================= */
+
+.medivo-mobile-menu {
+  position: fixed;
+
+  top: 72px;
+  right: 12px;
+
+  z-index: 1002;
+
+  width: min(300px, calc(100vw - 24px));
+
+  padding: 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.16);
+
+  animation: medivoMobileMenuIn 0.18s ease-out;
+}
+
+@keyframes medivoMobileMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.medivo-mobile-menu-status {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 11px 12px;
+  margin-bottom: 6px;
+
+  border-radius: 10px;
+
+  background: #f0fdf4;
+
+  color: #166534;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.medivo-mobile-menu button {
+  width: 100%;
+
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 12px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.medivo-mobile-menu button:hover,
+.medivo-mobile-menu button.active {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.medivo-mobile-menu .menu-icon {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 28px;
+
+  border-radius: 8px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.medivo-mobile-menu button:hover .menu-icon,
+.medivo-mobile-menu button.active .menu-icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.medivo-mobile-menu-divider {
+  height: 1px;
+
+  margin: 8px 4px;
+
+  background: #e2e8f0;
+}
+
+.medivo-mobile-menu button.logout {
+  color: #dc2626;
+}
+
+.medivo-mobile-menu button.logout:hover {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.medivo-mobile-menu button.logout .menu-icon {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+/* =========================================
+   BACK BAR
+   ========================================= */
+
+.medivo-backbar {
+  width: 100%;
+
+  background: #ffffff;
+}
+
+.medivo-backbar-inner {
+  width: 100%;
+  max-width: 1440px;
+
+  margin: 0 auto;
+  padding: 14px 28px 0;
+
+  box-sizing: border-box;
+}
+
+.medivo-back-button {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 8px 11px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.medivo-back-button:hover {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.medivo-back-button span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1000px) {
+  .medivo-topbar-inner {
+    padding: 0 20px;
+  }
+
+  .medivo-topbar-brand-subtitle {
+    display: none;
+  }
+
+  .medivo-topbar-actions {
+    gap: 6px;
+  }
+
+  .medivo-nav-button,
+  .medivo-logout-button {
+    padding: 0 11px;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 760px) {
+  .medivo-topbar-inner {
+    min-height: 64px;
+
+    padding: 0 16px;
+  }
+
+  .medivo-topbar-logo {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+  }
+
+  .medivo-topbar-logo img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .medivo-topbar-brand-name {
+    font-size: 18px;
+  }
+
+  .medivo-topbar-actions {
+    display: none;
+  }
+
+  .medivo-mobile-menu-button {
+    display: flex;
+  }
+
+  .medivo-mobile-menu {
+    top: 64px;
+  }
+
+  .medivo-backbar-inner {
+    padding: 10px 16px 0;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 420px) {
+  .medivo-topbar-brand-text {
+    display: none;
+  }
+
+  .medivo-topbar-logo {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+  }
+
+  .medivo-topbar-logo img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .medivo-mobile-menu {
+    right: 8px;
+
+    width: calc(100vw - 16px);
+  }
+}

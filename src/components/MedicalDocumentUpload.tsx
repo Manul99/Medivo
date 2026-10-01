@@ -208,7 +208,7 @@ export default function MedicalDocumentUpload({
 
         <div className="medical-upload-icon">
           <span aria-hidden="true">
-            +
+            🗂️
           </span>
         </div>
 

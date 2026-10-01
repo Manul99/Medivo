@@ -63,7 +63,10 @@ export default function Login() {
             className="brand-mark"
             aria-hidden="true"
           >
-            +
+              <img
+              src="/medivo-logo.png"
+              alt="Medivo Logo"
+              />
           </div>
 
           <div>

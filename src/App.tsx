@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import MedicalDocuments from "./pages/MedicalDocuments";
+import MedicationHistory from "./pages/MedicationHistory";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -43,12 +45,22 @@ function App() {
           path="/dashboard"
           element={<Dashboard />}
         />
+
+        <Route
+          path="/medication-history"
+          element={<MedicationHistory />}
+        />
         <Route
         path="/medical-documents"
         element={
           <MedicalDocuments />
         }
-/>
+        
+        />
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
 
         {/* Unknown URL */}
         <Route

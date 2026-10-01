@@ -88,14 +88,20 @@ const [
     return [];
   }
 });
+const [isMobileMenuOpen, setIsMobileMenuOpen] =
+  useState(false);
 
 useEffect(() => {
-  localStorage.setItem(
-    "medivo:selectedCompartments",
-    JSON.stringify(
-      selectedCompartmentIds
-    )
-  );
+  if (selectedCompartmentIds.length > 0) {
+    localStorage.setItem(
+      "medivo:selectedCompartments",
+      JSON.stringify(selectedCompartmentIds)
+    );
+  } else {
+    localStorage.removeItem(
+      "medivo:selectedCompartments"
+    );
+  }
 }, [selectedCompartmentIds]);
 
   /*
@@ -465,7 +471,10 @@ const handleFinishMedication = async (
             className="brand-mark"
             aria-hidden="true"
           >
-            +
+              <img
+              src="/medivo-logo.png"
+              alt="Medivo Logo"
+              />
           </div>
 
           <div>
@@ -482,35 +491,147 @@ const handleFinishMedication = async (
 
         </div>
 
-       <div className="topbar-actions">
+         <div className="topbar-actions">
 
-        <div className="connection-status">
+            {/* ================= DESKTOP ACTIONS ================= */}
+            <div className="desktop-topbar-actions">
 
+              <div className="connection-status">
+                <span className="status-dot" />
+                Box ready
+              </div>
+
+              <button
+                type="button"
+                className="medicine-history-button"
+                onClick={() =>
+                  navigate("/medication-history")
+                }
+              >
+                Medicine History
+              </button>
+
+              <button
+                type="button"
+                className="medical-documents-button"
+                onClick={() =>
+                  navigate("/medical-documents")
+                }
+              >
+                Medical Documents
+              </button>
+
+              <button
+              type="button"
+              className="profile-button"
+              onClick={() => navigate("/profile")}
+            >
+              Profile
+            </button>
+
+              <button
+                type="button"
+                className="logout-button"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+
+            </div>
+
+              {/* ================= MOBILE HAMBURGER ================= */}
+              <button
+                type="button"
+                className="mobile-menu-button"
+                aria-label={
+                  isMobileMenuOpen
+                    ? "Close menu"
+                    : "Open menu"
+                }
+                aria-expanded={isMobileMenuOpen}
+                onClick={() =>
+                  setIsMobileMenuOpen(
+                    (current) => !current
+                  )
+                }
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+
+          </div>
+
+      </header>
+
+          {isMobileMenuOpen && (
+      <div className="mobile-menu">
+
+        <div className="mobile-menu-status">
           <span className="status-dot" />
-
-          Box ready
-
+          <span>Box ready</span>
         </div>
 
         <button
           type="button"
-          className="medical-documents-button"
-          onClick={() => navigate("/medical-documents")}
+          className="mobile-menu-item"
+          onClick={() => {
+            setIsMobileMenuOpen(false);
+            navigate("/medication-history");
+          }}
         >
-          Medical Documents
+          <span className="mobile-menu-icon">
+            💊
+          </span>
+
+          <span>
+            Medicine History
+          </span>
         </button>
 
         <button
           type="button"
-          className="logout-button"
+          className="mobile-menu-item"
+          onClick={() => {
+            setIsMobileMenuOpen(false);
+            navigate("/medical-documents");
+          }}
+        >
+          <span className="mobile-menu-icon">
+            📄
+          </span>
+
+          <span>
+            Medical Documents
+          </span>
+        </button>
+
+          <button
+          type="button"
+          className="profile-button"
+          onClick={() => navigate("/profile")}
+        >
+          Profile
+        </button>
+
+        <div className="mobile-menu-divider" />
+
+        <button
+          type="button"
+          className="mobile-menu-item mobile-logout-item"
           onClick={handleLogout}
         >
-          Logout
+          <span className="mobile-menu-icon">
+            ↪
+          </span>
+
+          <span>
+            Logout
+          </span>
         </button>
 
       </div>
-
-      </header>
+    )}
 
       {/* ================= MAIN ================= */}
 
