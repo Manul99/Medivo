@@ -1,13 +1,19 @@
-import type { MedicationHistory } from "../interfaces/medicationHistory.interface";
+import type {
+  MedicationHistory,
+} from "../interfaces/medicationHistory.interface";
+
+import { getApiUrl } from "../config/api";
 
 export async function getMedicationHistory(
   fromDate: string,
   toDate: string
 ): Promise<MedicationHistory[]> {
   const response = await fetch(
-    `/api/medication-history` +
-      `?fromDate=${encodeURIComponent(fromDate)}` +
-      `&toDate=${encodeURIComponent(toDate)}`,
+    getApiUrl(
+      `/medication-history` +
+        `?fromDate=${encodeURIComponent(fromDate)}` +
+        `&toDate=${encodeURIComponent(toDate)}`
+    ),
     {
       method: "GET",
       credentials: "include",
@@ -19,10 +25,12 @@ export async function getMedicationHistory(
   }
 
   if (!response.ok) {
-    const errorText = await response.text();
+    const errorText =
+      await response.text();
 
     throw new Error(
-      errorText || "Failed to load medication history."
+      errorText ||
+        "Failed to load medication history."
     );
   }
 

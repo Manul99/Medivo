@@ -3,11 +3,11 @@ import type {
   MedicalDocumentType,
 } from "../interfaces/medicalDocument.interface";
 
-const API_BASE_URL = "";
+import { getApiUrl } from "../config/api";
 
 async function getCsrfToken(): Promise<string> {
   const response = await fetch(
-    `${API_BASE_URL}/api/auth/csrf`,
+    getApiUrl("/auth/csrf"),
     {
       credentials: "include",
     }
@@ -35,7 +35,7 @@ async function handleUnauthorized(
 export async function getMedicalDocuments():
   Promise<MedicalDocument[]> {
   const response = await fetch(
-    `${API_BASE_URL}/api/medical-documents`,
+    getApiUrl("/medical-documents"),
     {
       method: "GET",
       credentials: "include",
@@ -101,7 +101,7 @@ export async function uploadMedicalDocument(
 
   const response =
     await fetch(
-      `${API_BASE_URL}/api/medical-documents`,
+      getApiUrl("/medical-documents"),
       {
         method: "POST",
         credentials: "include",
@@ -132,7 +132,7 @@ export async function getMedicalDocumentViewUrl(
 ): Promise<string> {
   const response =
     await fetch(
-      `${API_BASE_URL}/api/medical-documents/${id}/view`,
+      getApiUrl(`/medical-documents/${id}/view`),
       {
         method: "GET",
         credentials: "include",
@@ -165,7 +165,7 @@ export async function deleteMedicalDocument(
 
   const response =
     await fetch(
-      `${API_BASE_URL}/api/medical-documents/${id}`,
+      getApiUrl(`/medical-documents/${id}`),
       {
         method: "DELETE",
         credentials: "include",

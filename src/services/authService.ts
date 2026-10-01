@@ -7,8 +7,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase";
-
-const API_BASE_URL = "";
+import { getApiUrl } from "../config/api";
 
 interface RegisterRequest {
   firstName: string;
@@ -39,7 +38,7 @@ export interface UserProfileResponse {
  */
 async function getCsrfToken(): Promise<string> {
   const response = await fetch(
-    `${API_BASE_URL}/api/auth/csrf`,
+    getApiUrl("/auth/csrf"),
     {
       method: "GET",
       credentials: "include",
@@ -67,7 +66,7 @@ async function createBackendSession(
   csrfToken: string
 ): Promise<void> {
   const response = await fetch(
-    `${API_BASE_URL}/api/auth/session`,
+    getApiUrl("/auth/session"),
     {
       method: "POST",
       credentials: "include",
@@ -98,7 +97,7 @@ async function createUserProfile(
   csrfToken: string
 ): Promise<UserProfileResponse> {
   const response = await fetch(
-    `${API_BASE_URL}/api/auth/profile`,
+    getApiUrl("/auth/profile"),
     {
       method: "POST",
       credentials: "include",
@@ -223,7 +222,7 @@ export async function loginUser(
    * 5. Load application profile.
    */
   const response = await fetch(
-    `${API_BASE_URL}/api/auth/me`,
+    getApiUrl("/auth/me"),
     {
       method: "GET",
       credentials: "include",
@@ -244,7 +243,7 @@ export async function logoutUser(): Promise<void> {
     const csrfToken = await getCsrfToken();
 
     await fetch(
-      `${API_BASE_URL}/api/auth/logout`,
+      getApiUrl("/auth/logout"),
       {
         method: "POST",
         credentials: "include",

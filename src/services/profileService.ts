@@ -3,9 +3,7 @@ import type {
   UpdateProfileRequest,
 } from "../interfaces/user.interface";
 
-const getApiUrl = (path: string) =>
-  `/api${path}`;
-
+import { getApiUrl } from "../config/api";
 export async function getMyProfile(): Promise<UserProfile> {
   const response =
     await fetch(
