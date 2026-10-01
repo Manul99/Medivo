@@ -3,7 +3,7 @@ import type {
   MedicationAssignment,
 } from "../interfaces/medication.interface";
 
-const API_BASE_URL = "";
+import { getApiUrl } from "../config/api";
 
 export interface CreateMedicationRequest {
   medicineName: string;
@@ -22,7 +22,7 @@ export interface CreateMedicationRequest {
 
 async function getCsrfToken(): Promise<string> {
   const response = await fetch(
-    `${API_BASE_URL}/api/auth/csrf`,
+    getApiUrl("/auth/csrf"),
     {
       method: "GET",
       credentials: "include",
@@ -50,7 +50,7 @@ export async function getMedications(): Promise<
   MedicationAssignment[]
 > {
   const response = await fetch(
-    `${API_BASE_URL}/api/medications`,
+    getApiUrl("/medications"),
     {
       method: "GET",
       credentials: "include",
@@ -82,7 +82,7 @@ export async function createMedication(
     await getCsrfToken();
 
   const response = await fetch(
-    `${API_BASE_URL}/api/medications`,
+    getApiUrl("/medications"),
     {
       method: "POST",
 
@@ -122,7 +122,7 @@ export async function deleteMedication(
     await getCsrfToken();
 
   const response = await fetch(
-    `${API_BASE_URL}/api/medications/${id}`,
+    getApiUrl(`/medications/${id}`),
     {
       method: "DELETE",
 
@@ -157,7 +157,7 @@ export async function finishMedication(
     await getCsrfToken();
 
   const response = await fetch(
-    `${API_BASE_URL}/api/medications/${id}`,
+    getApiUrl(`/medications/${id}`),
     {
       method: "DELETE",
 
@@ -193,7 +193,7 @@ export async function updateMedication(
     await getCsrfToken();
 
   const response = await fetch(
-    `${API_BASE_URL}/api/medications/${id}`,
+    getApiUrl(`/medications/${id}`),
     {
       method: "PUT",
 
