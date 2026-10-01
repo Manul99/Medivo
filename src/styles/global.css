@@ -1,6 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
+  --medivo-blue: #2563eb;
+  --medivo-blue-dark: #1d4ed8;
+  --medivo-cyan: #06b6d4;
+  --medivo-sky: #0ea5e9;
+
+  --medivo-blue-soft: #eff6ff;
+  --medivo-cyan-soft: #ecfeff;
+
+  --text-primary: #111827;
+  --text-secondary: #64748b;
+
+  --border: #e5e7eb;
+  --background: #f5f7fb;
+
   font-family:
     Inter,
     system-ui,
@@ -9,8 +23,8 @@
     "Segoe UI",
     sans-serif;
 
-  color: #111827;
-  background: #f5f7fb;
+  color: var(--text-primary);
+  background: var(--background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -65,6 +79,122 @@ button:disabled {
   border-bottom: 1px solid #e5e7eb;
 }
 
+/* =====================================================
+   TOPBAR NAVIGATION BUTTONS
+   ===================================================== */
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topbar-nav-button,
+.topbar-logout-button {
+  height: 50px;
+
+  padding: 0 20px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #1e293b;
+
+  font-family: inherit;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.topbar-nav-button:hover,
+.topbar-logout-button:hover {
+  background: #f8fafc;
+
+  border-color: #b8c0cc;
+
+  box-shadow:
+    0 2px 6px
+    rgba(15, 23, 42, 0.05);
+}
+
+.topbar-logout-button {
+  padding: 0 22px;
+}
+
+
+/* =====================================================
+   TOPBAR MOBILE
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+  .topbar {
+    padding: 0 24px;
+  }
+
+  .topbar-actions {
+    gap: 8px;
+  }
+
+  .topbar-nav-button,
+  .topbar-logout-button {
+    height: 44px;
+
+    padding: 0 13px;
+
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .topbar {
+    height: auto;
+
+    min-height: 64px;
+
+    padding: 10px 18px;
+
+    gap: 12px;
+  }
+
+  .topbar-actions {
+    overflow-x: auto;
+
+    gap: 7px;
+
+    max-width: 100%;
+  }
+
+  .topbar-nav-button,
+  .topbar-logout-button {
+    flex: 0 0 auto;
+
+    height: 40px;
+
+    padding: 0 12px;
+
+    font-size: 12px;
+  }
+
+  .connection-status {
+    display: none;
+  }
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -73,26 +203,47 @@ button:disabled {
 }
 
 .brand-mark {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
 
-  border-radius: 11px;
+  border-radius: 12px;
 
   display: grid;
   place-items: center;
 
-  background: #2563eb;
+  background: #ffffff;
 
-  color: white;
+  border: 1px solid #dbeafe;
 
-  font-size: 24px;
-  font-weight: 500;
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 14px rgba(37, 99, 235, 0.12);
+}
+
+.brand-mark img {
+  width: 34px;
+  height: 34px;
+
+  object-fit: contain;
+
+  display: block;
 }
 
 .brand-name {
   font-weight: 800;
+  letter-spacing: -0.03em;
 
-  letter-spacing: -0.02em;
+  background: linear-gradient(
+    135deg,
+    #2563eb 0%,
+    #0ea5e9 55%,
+    #06b6d4 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .brand-subtitle {
@@ -1396,28 +1547,32 @@ button:disabled {
 }
 
 .auth-brand .brand-mark {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 0 0 52px;
 
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
+  display: grid;
+  place-items: center;
 
-  color: #ffffff;
+  background: #ffffff;
 
-  border-radius: 13px;
-
-  font-size: 25px;
-  font-weight: 700;
+  border: 1px solid #dbeafe;
+  border-radius: 15px;
 
   box-shadow:
-    0 8px 18px rgba(37, 99, 235, 0.25);
+    0 8px 20px rgba(37, 99, 235, 0.14);
+
+  overflow: hidden;
+}
+
+.auth-brand .brand-mark img {
+  width: 44px;
+  height: 44px;
+
+  object-fit: contain;
+
+  display: block;
 }
 
 .auth-brand .brand-name {
@@ -1745,33 +1900,65 @@ button:disabled {
    BRAND
    ========================================================= */
 
-.register-card::before {
-  content: "+";
+.register-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-  width: 46px;
-  height: 46px;
+  margin-bottom: 28px;
+}
+
+.register-brand-mark {
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 18px;
+  background: #ffffff;
+
+  border: 1px solid #dbeafe;
+  border-radius: 15px;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.14);
+
+  overflow: hidden;
+}
+
+.register-brand-mark img {
+  width: 44px;
+  height: 44px;
+
+  object-fit: contain;
+}
+
+.register-brand-name {
+  font-size: 21px;
+  font-weight: 750;
 
   background: linear-gradient(
     135deg,
-    #2563eb,
-    #1d4ed8
+    #2563eb 0%,
+    #0ea5e9 55%,
+    #06b6d4 100%
   );
 
-  color: #ffffff;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 
-  border-radius: 13px;
+  letter-spacing: -0.3px;
+}
 
-  font-size: 25px;
-  font-weight: 700;
+.register-brand-subtitle {
+  margin-top: 2px;
 
-  box-shadow:
-    0 8px 18px rgba(37, 99, 235, 0.25);
+  font-size: 12px;
+  color: #64748b;
 }
 
 /* =========================================================
@@ -3689,3 +3876,3044 @@ button:disabled {
   }
 
 }
+
+/* =========================================================
+   MEDICATION HISTORY
+   ========================================================= */
+
+.medication-history-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #f7f9fc;
+}
+
+.medication-history-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.medication-history-content {
+  width: 100%;
+  padding: 40px 24px 60px;
+  box-sizing: border-box;
+}
+
+.medication-history-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 0px 0px 0px
+}
+
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.back-to-dashboard-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #667085;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.back-to-dashboard-button span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.back-to-dashboard-button:hover {
+  color: #2563eb;
+  transform: translateX(-2px);
+}
+
+.back-to-dashboard-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.medication-history-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.medication-history-title-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: #eaf2ff;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.medication-history-header h1 {
+  margin: 0 0 5px;
+  color: #172033;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.medication-history-header p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.medication-history-filter-card {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 20px rgba(15, 23, 42, 0.05);
+}
+
+.history-filter-header {
+  margin-bottom: 20px;
+}
+
+.history-filter-header h2 {
+  margin: 0 0 5px;
+  color: #172033;
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.history-filter-header p {
+  margin: 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.history-filter-form {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    auto;
+  align-items: end;
+  gap: 16px;
+}
+
+.history-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.history-filter-field label {
+  color: #344054;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.history-filter-field input {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #172033;
+  font-family: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.history-filter-field input:hover {
+  border-color: #98a2b3;
+}
+
+.history-filter-field input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.history-filter-field input:disabled {
+  background: #f9fafb;
+  color: #98a2b3;
+  cursor: not-allowed;
+}
+
+.history-filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.history-reset-button,
+.history-apply-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 17px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.history-reset-button {
+  border: 1px solid #d0d5dd;
+  background: #ffffff;
+  color: #475467;
+}
+
+.history-reset-button:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #98a2b3;
+}
+
+.history-reset-button:active:not(:disabled),
+.history-apply-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.history-apply-button {
+  min-width: 125px;
+  gap: 8px;
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.history-apply-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  box-shadow:
+    0 5px 12px rgba(37, 99, 235, 0.2);
+}
+
+.history-reset-button:disabled,
+.history-apply-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   BUTTON SPINNER
+   ========================================================= */
+
+.history-button-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: medication-history-spin 0.7s linear infinite;
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.history-page-error {
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   SELECTED PERIOD
+   ========================================================= */
+
+.history-selected-period {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid #e5eaf0;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.history-selected-period > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.history-selected-period span {
+  color: #667085;
+  font-size: 13px;
+}
+
+.history-selected-period strong {
+  color: #344054;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.history-record-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 11px;
+  border-radius: 16px;
+  background: #eaf2ff;
+  color: #2563eb !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.history-summary-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.history-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 13px;
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.035);
+}
+
+.history-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.history-summary-icon.taken {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.history-summary-icon.medicine {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.history-summary-icon.days {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.history-summary-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+}
+
+.history-summary-card span {
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.history-summary-card strong {
+  color: #172033;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+/* =========================================================
+   HISTORY LIST
+   ========================================================= */
+
+.medication-history-list {
+  width: 100%;
+}
+
+.history-list-header {
+  margin-bottom: 15px;
+}
+
+.history-list-header h2 {
+  margin: 0 0 4px;
+  color: #172033;
+  font-size: 21px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.history-list-header p {
+  margin: 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   DESKTOP TABLE
+   ========================================================= */
+
+.history-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.035);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.history-table thead {
+  background: #f8fafc;
+}
+
+.history-table th {
+  padding: 14px 17px;
+  border-bottom: 1px solid #e5eaf0;
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.history-table td {
+  padding: 16px 17px;
+  border-bottom: 1px solid #eef1f5;
+  color: #344054;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.history-table tbody tr {
+  transition:
+    background-color 0.15s ease;
+}
+
+.history-table tbody tr:hover {
+  background: #fafcff;
+}
+
+/* =========================================================
+   DATE CELL
+   ========================================================= */
+
+.history-date-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-date-cell strong {
+  color: #344054;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TIME
+   ========================================================= */
+
+.history-time {
+  display: inline-flex;
+  align-items: center;
+  min-width: 90px;
+  color: #475467;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   MEDICINE CELL
+   ========================================================= */
+
+.history-medicine-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 170px;
+}
+
+.history-medicine-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #eff6ff;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.history-medicine-cell > div:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 3px;
+}
+
+.history-medicine-cell strong {
+  overflow: hidden;
+  max-width: 190px;
+  color: #172033;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-medicine-cell strong.history-medicine-warning {
+  color: #b45309;
+}
+
+.history-medicine-cell small {
+  color: #98a2b3;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+/* =========================================================
+   COMPARTMENT
+   ========================================================= */
+
+.history-compartment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 43px;
+  min-height: 28px;
+  box-sizing: border-box;
+  padding: 0 8px;
+  border: 1px solid #dbeafe;
+  border-radius: 7px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.history-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 9px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.history-status-badge.taken {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.history-status-badge.warning {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.history-status-badge > span {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   MOBILE LIST
+   ========================================================= */
+
+.history-mobile-list {
+  display: none;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.medication-history-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  box-sizing: border-box;
+  padding: 40px;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+}
+
+.history-loading-spinner {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 13px;
+  border: 3px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: medication-history-spin 0.7s linear infinite;
+}
+
+.medication-history-loading p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.medication-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 270px;
+  box-sizing: border-box;
+  padding: 35px 25px;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.history-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: #eff6ff;
+  font-size: 27px;
+}
+
+.medication-history-empty h3 {
+  margin: 0 0 7px;
+  color: #344054;
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.medication-history-empty p {
+  max-width: 450px;
+  margin: 0 0 20px;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.history-empty-reset-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.history-empty-reset-button:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+/* =========================================================
+   MOBILE CARD
+   ========================================================= */
+
+.history-mobile-card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 17px;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 13px;
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.035);
+}
+
+.history-mobile-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.history-mobile-medicine {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 10px;
+}
+
+.history-mobile-medicine h3 {
+  overflow: hidden;
+  margin: 0 0 4px;
+  color: #172033;
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-mobile-medicine span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 7px;
+  border-radius: 5px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.history-status-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.history-status-dot.taken {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.history-status-dot.warning {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.history-mobile-details {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(0, 1fr)
+    minmax(0, 0.8fr);
+  gap: 12px;
+  padding: 15px 0;
+}
+
+.history-mobile-detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+}
+
+.history-mobile-detail span {
+  color: #98a2b3;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.history-mobile-detail strong {
+  overflow: hidden;
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.history-mobile-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.history-mobile-status.success {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.history-mobile-status.warning {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.history-mobile-status > span {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes medication-history-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .medication-history-page {
+    padding: 30px 18px 50px;
+  }
+
+  .medication-history-container {
+    max-width: 100%;
+  }
+
+  .history-filter-form {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+  }
+
+  .history-filter-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+
+  .history-summary-grid {
+    gap: 12px;
+  }
+
+  .history-summary-card {
+    padding: 15px;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 13px 12px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+  .medication-history-page {
+    padding: 22px 13px 40px;
+  }
+
+  .back-to-dashboard-button {
+    margin-bottom: 17px;
+    font-size: 13px;
+  }
+
+  .medication-history-header {
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 22px;
+  }
+
+  .medication-history-title-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    font-size: 21px;
+  }
+
+  .medication-history-header h1 {
+    font-size: 23px;
+  }
+
+  .medication-history-header p {
+    font-size: 13px;
+  }
+
+  .medication-history-filter-card {
+    padding: 18px 16px;
+    border-radius: 13px;
+  }
+
+  .history-filter-form {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .history-filter-actions {
+    grid-column: auto;
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .history-reset-button,
+  .history-apply-button {
+    flex: 1;
+  }
+
+  .history-selected-period {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .history-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .history-summary-card {
+    padding: 14px;
+  }
+
+  .history-summary-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .history-summary-card strong {
+    font-size: 20px;
+  }
+
+  .history-list-header h2 {
+    font-size: 19px;
+  }
+
+  /*
+   * Hide desktop table and show mobile cards.
+   */
+  .history-table-wrapper {
+    display: none;
+  }
+
+  .history-mobile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .medication-history-empty {
+    min-height: 230px;
+    padding: 28px 18px;
+  }
+
+  .medication-history-loading {
+    min-height: 220px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .medication-history-page {
+    padding: 16px 9px 35px;
+  }
+
+  .medication-history-filter-card {
+    padding: 16px 13px;
+  }
+
+  .medication-history-header h1 {
+    font-size: 21px;
+  }
+
+  .medication-history-header p {
+    font-size: 12px;
+  }
+
+  .history-filter-header h2 {
+    font-size: 17px;
+  }
+
+  .history-filter-field input {
+    height: 45px;
+  }
+
+  .history-selected-period {
+    padding: 12px;
+  }
+
+  .history-selected-period > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .history-mobile-card {
+    padding: 14px;
+  }
+
+  .history-mobile-details {
+    grid-template-columns:
+      1fr 1fr;
+    gap: 13px;
+  }
+
+  .history-mobile-detail:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .history-mobile-detail strong {
+    font-size: 11px;
+  }
+
+  .history-mobile-medicine h3 {
+    max-width: 190px;
+  }
+
+  .history-mobile-status {
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 350px) {
+  .medication-history-page {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .medication-history-header h1 {
+    font-size: 20px;
+  }
+
+  .history-filter-actions {
+    flex-direction: column;
+  }
+
+  .history-reset-button,
+  .history-apply-button {
+    width: 100%;
+    flex: none;
+  }
+
+  .history-mobile-medicine h3 {
+    max-width: 145px;
+  }
+
+  .history-mobile-details {
+    grid-template-columns: 1fr;
+  }
+
+  .history-mobile-detail:first-child {
+    grid-column: auto;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.back-to-dashboard-button:focus-visible,
+.history-reset-button:focus-visible,
+.history-apply-button:focus-visible,
+.history-empty-reset-button:focus-visible,
+.history-filter-field input:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-dashboard-button,
+  .history-reset-button,
+  .history-apply-button,
+  .history-empty-reset-button,
+  .history-filter-field input {
+    transition: none;
+  }
+
+  .history-button-spinner,
+  .history-loading-spinner {
+    animation: none;
+  }
+}
+/* Medicine History button */
+.medicine-history-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #243447;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.medicine-history-button:hover {
+  background: #f4f8fb;
+  border-color: #b9c9d8;
+  color: #1d4ed8;
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.medicine-history-button:active {
+  transform: translateY(1px);
+}
+
+.medicine-history-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .medicine-history-button {
+    height: 38px;
+    padding: 0 13px;
+    font-size: 13px;
+  }
+}
+
+.desktop-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 640px) {
+
+  .topbar {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .desktop-topbar-actions {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 0;
+
+    border: 1px solid #dbeafe;
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow:
+      0 4px 12px rgba(
+        37,
+        99,
+        235,
+        0.10
+      );
+
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .mobile-menu-button:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+
+  .mobile-menu-button:active {
+    transform: scale(0.96);
+  }
+
+  .mobile-menu-button span {
+    width: 18px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: #2563eb;
+
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .mobile-menu {
+    position: absolute;
+
+    top: 64px;
+    left: 12px;
+    right: 12px;
+
+    z-index: 1000;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+
+    box-shadow:
+      0 16px 40px rgba(
+        15,
+        23,
+        42,
+        0.14
+      );
+
+    animation: mobile-menu-in 0.16s ease-out;
+  }
+
+  .mobile-menu-status {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 12px 13px;
+
+    margin-bottom: 4px;
+
+    color: #475569;
+
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .mobile-menu-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 48px;
+
+    padding: 0 13px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #334155;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .mobile-menu-item:hover {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+
+  .mobile-menu-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eff6ff;
+
+    font-size: 15px;
+  }
+
+  .mobile-menu-divider {
+    height: 1px;
+
+    margin: 8px 4px;
+
+    background: #e5e7eb;
+  }
+
+  .mobile-logout-item {
+    color: #dc2626;
+  }
+
+  .mobile-logout-item:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+
+  .mobile-logout-item
+    .mobile-menu-icon {
+    background: #fef2f2;
+  }
+
+}
+
+@keyframes mobile-menu-in {
+
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.desktop-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 640px) {
+
+  .desktop-topbar-actions {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 0;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+  }
+
+  .mobile-menu-button span {
+    display: block;
+
+    width: 19px;
+    height: 2px;
+
+    border-radius: 999px;
+
+    background: #374151;
+  }
+
+  .topbar {
+    height: 64px;
+    padding: 0 18px;
+  }
+}
+
+/* =====================================================
+   PAGE
+   ===================================================== */
+
+.medical-documents-page {
+  min-height: 100vh;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  background: #f7f9fc;
+}
+
+
+/* =====================================================
+   TOP BAR
+   ===================================================== */
+
+.topbar {
+  width: 100%;
+  height: 72px;
+
+  margin: 0;
+  padding: 0 5vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =====================================================
+   BRAND
+   ===================================================== */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 0;
+  margin: 0;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  background: #ffffff;
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 14px rgba(37, 99, 235, 0.12);
+}
+
+.brand-mark img {
+  width: 34px;
+  height: 34px;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 800;
+
+  letter-spacing: -0.03em;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb 0%,
+      #0ea5e9 55%,
+      #06b6d4 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =====================================================
+   TOP BAR ACTIONS
+   ===================================================== */
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.desktop-topbar-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+
+/* =====================================================
+   CONNECTION STATUS
+   ===================================================== */
+
+.connection-status {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+}
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.medicine-history-button,
+.medical-documents-button,
+.logout-button {
+  height: 40px;
+
+  padding: 0 16px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #243447;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.medicine-history-button:hover,
+.medical-documents-button:hover {
+  background: #f4f8fb;
+
+  border-color: #b9c9d8;
+
+  color: #1d4ed8;
+
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.logout-button:hover {
+  background: #f8fafc;
+
+  border-color: #b9c9d8;
+
+  color: #1d4ed8;
+}
+
+
+/* =====================================================
+   PAGE CONTENT
+   ===================================================== */
+
+.medical-documents-content {
+  width: 100%;
+
+  padding: 40px 24px 60px;
+
+  box-sizing: border-box;
+}
+
+.medical-documents-container {
+  width: 100%;
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   MOBILE MENU BUTTON
+   ===================================================== */
+
+.mobile-menu-button {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 5px;
+
+  background: #ffffff;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.mobile-menu-button span {
+  display: block;
+
+  width: 19px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: #374151;
+}
+
+
+/* =====================================================
+   MOBILE MENU
+   ===================================================== */
+
+.mobile-menu-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  background: rgba(15, 23, 42, 0.2);
+}
+
+.mobile-menu {
+  position: fixed;
+
+  top: 64px;
+  right: 12px;
+
+  z-index: 1001;
+
+  width: min(300px, calc(100vw - 24px));
+
+  padding: 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.15);
+}
+
+.mobile-menu-status {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 11px 12px;
+
+  margin-bottom: 6px;
+
+  border-radius: 9px;
+
+  background: #f0fdf4;
+
+  color: #166534;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mobile-menu button {
+  width: 100%;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 12px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.mobile-menu button:hover,
+.mobile-menu button.active {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.mobile-menu-icon {
+  width: 28px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+}
+
+.mobile-menu button:hover .mobile-menu-icon,
+.mobile-menu button.active .mobile-menu-icon {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+.mobile-menu-divider {
+  height: 1px;
+
+  margin: 8px 4px;
+
+  background: #e2e8f0;
+}
+
+.mobile-menu button.mobile-menu-logout {
+  color: #dc2626;
+}
+
+.mobile-menu button.mobile-menu-logout:hover {
+  background: #fef2f2;
+
+  color: #b91c1c;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 640px) {
+
+  .topbar {
+    height: 64px;
+
+    padding: 0 16px;
+  }
+
+  .desktop-topbar-actions {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-mark img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+  }
+
+  .brand-subtitle {
+    font-size: 11px;
+  }
+
+  .medical-documents-content {
+    padding: 22px 13px 40px;
+  }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 420px) {
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .medical-documents-content {
+    padding: 18px 10px 35px;
+  }
+}
+
+/* =========================================
+   MEDICINE HISTORY PAGINATION
+   ========================================= */
+
+.history-pagination {
+  margin-top: 20px;
+  padding-top: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.history-pagination-info {
+  color: #64748b;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.history-pagination-info strong {
+  color: #334155;
+  font-weight: 700;
+}
+
+.history-pagination-controls {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.history-pagination-button {
+  min-height: 36px;
+
+  padding: 0 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.history-pagination-button:hover:not(:disabled) {
+  background: #eff6ff;
+
+  border-color: #bfdbfe;
+
+  color: #2563eb;
+}
+
+.history-pagination-button:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+.history-pagination-pages {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.history-pagination-page {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.history-pagination-page:hover {
+  background: #eff6ff;
+
+  border-color: #bfdbfe;
+
+  color: #2563eb;
+}
+
+.history-pagination-page.active {
+  background: #2563eb;
+
+  border-color: #2563eb;
+
+  color: #ffffff;
+}
+
+/* =========================
+   Blood Type Select
+   ========================= */
+
+.form-group select {
+  width: 100%;
+  height: 46px;
+  padding: 0 42px 0 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+
+  background-color: #ffffff;
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+
+  outline: none;
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #64748b 50%),
+    linear-gradient(135deg, #64748b 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 20px,
+    calc(100% - 13px) 20px;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-group select:hover {
+  border-color: #93c5fd;
+}
+
+.form-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.form-group select:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Placeholder option */
+.form-group select:invalid {
+  color: #9ca3af;
+}
+
+.form-group select option {
+  color: #111827;
+  background-color: #ffffff;
+  font-size: 14px;
+}
+
+.form-group select option[value=""] {
+  color: #9ca3af;
+}
+
+/* Profile EdIT*/
+/* =========================================================
+   PROFILE PAGE
+   ========================================================= */
+
+.profile-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+
+/* =========================================================
+   PROFILE TOPBAR
+   Matches the existing application topbar
+   ========================================================= */
+
+.profile-page .topbar {
+  width: 100%;
+  height: 72px;
+
+  padding: 0 5vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PROFILE CONTENT
+   ========================================================= */
+
+.profile-content {
+  width: min(1000px, 90vw);
+
+  margin: 0 auto;
+
+  padding: 40px 0 60px;
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+   ========================================================= */
+
+.profile-header {
+  max-width: 1000px;
+
+  margin: 0 auto 24px;
+}
+
+.profile-header h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 28px;
+  font-weight: 750;
+
+  letter-spacing: -0.02em;
+}
+
+.profile-header p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.profile-card {
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 30px
+    rgba(15, 23, 42, 0.06);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   PROFILE SECTION
+   ========================================================= */
+
+.profile-section {
+  padding: 28px 30px;
+}
+
+.profile-section-header {
+  margin-bottom: 22px;
+}
+
+.profile-section-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.profile-section-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   PROFILE FORM
+   ========================================================= */
+
+.profile-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+.profile-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form-group label {
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.profile-form-group input,
+.profile-form-group select {
+  width: 100%;
+  height: 46px;
+
+  box-sizing: border-box;
+
+  padding: 0 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.profile-form-group input:focus,
+.profile-form-group select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37, 99, 235, 0.12);
+}
+
+.profile-form-group input:hover:not(:disabled),
+.profile-form-group select:hover:not(:disabled) {
+  border-color: #93c5fd;
+}
+
+.profile-form-group input:disabled,
+.profile-form-group select:disabled {
+  background: #f3f4f6;
+
+  color: #6b7280;
+
+  cursor: not-allowed;
+}
+
+.profile-form-group input[readonly] {
+  background: #f8fafc;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   PROFILE SELECT
+   ========================================================= */
+
+.profile-form-group select {
+  cursor: pointer;
+
+  appearance: none;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding-right: 42px;
+
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      #64748b 50%
+    ),
+    linear-gradient(
+      135deg,
+      #64748b 50%,
+      transparent 50%
+    );
+
+  background-position:
+    calc(100% - 18px) 20px,
+    calc(100% - 13px) 20px;
+
+  background-size:
+    5px 5px,
+    5px 5px;
+
+  background-repeat: no-repeat;
+}
+
+.profile-form-group select:disabled {
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   READ ONLY
+   ========================================================= */
+
+.profile-readonly-text {
+  margin-top: 5px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.profile-divider {
+  height: 1px;
+
+  background: #eef2f7;
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.profile-message {
+  margin: 0 30px 20px;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+}
+
+.profile-error {
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #b91c1c;
+}
+
+.profile-success {
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+
+  color: #15803d;
+}
+
+
+/* =========================================================
+   PROFILE ACTIONS
+   ========================================================= */
+
+.profile-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 20px 30px;
+
+  border-top: 1px solid #eef2f7;
+
+  background: #fafbfc;
+}
+
+.profile-cancel-button,
+.profile-save-button {
+  height: 42px;
+
+  padding: 0 20px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-cancel-button {
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  color: #374151;
+}
+
+.profile-cancel-button:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.profile-save-button {
+  border: 1px solid #2563eb;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+.profile-save-button:hover:not(:disabled) {
+  background: #1d4ed8;
+
+  border-color: #1d4ed8;
+}
+
+.profile-cancel-button:disabled,
+.profile-save-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   PROFILE LOADING
+   ========================================================= */
+
+.profile-loading {
+  padding: 60px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   PROFILE - MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .profile-content {
+    width: auto;
+
+    padding: 28px 14px 50px;
+  }
+
+  .profile-header h1 {
+    font-size: 24px;
+  }
+
+  .profile-section {
+    padding: 22px 18px;
+  }
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .profile-message {
+    margin-left: 18px;
+
+    margin-right: 18px;
+  }
+
+  .profile-actions {
+    padding: 16px 18px;
+  }
+
+  .profile-cancel-button,
+  .profile-save-button {
+    flex: 1;
+  }
+}
+
+/* =========================================================
+   FINAL MEDIVO TOPBAR OVERRIDES
+   Desktop: compact navigation buttons
+   Mobile: hamburger navigation
+   ========================================================= */
+
+.topbar {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  padding: 0 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
+}
+
+.topbar-actions,
+.desktop-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar-nav-button,
+.topbar-logout-button {
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #243447;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.topbar-nav-button:hover,
+.topbar-logout-button:hover {
+  background: #f4f8fb;
+  border-color: #b9c9d8;
+  color: #1d4ed8;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+/* Profile page uses the same topbar dimensions */
+.profile-page .topbar {
+  height: 72px;
+  padding: 0 5vw;
+}
+
+/* Hamburger */
+.mobile-menu-button {
+  display: none;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mobile-menu-button:hover {
+  background: #f8fafc;
+  border-color: #b9c9d8;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.mobile-menu-button span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #334155;
+}
+
+/* Mobile dropdown used by Profile hamburger */
+.mobile-topbar-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 18px;
+  width: 230px;
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  z-index: 1100;
+}
+
+.mobile-topbar-menu button {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #334155;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-topbar-menu button:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.mobile-connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mobile-topbar-menu .mobile-logout-button {
+  margin-top: 4px;
+  border-top: 1px solid #f1f5f9;
+  border-radius: 0 0 8px 8px;
+}
+
+/* =========================================================
+   TOPBAR RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .topbar {
+    padding: 0 24px;
+  }
+
+  .desktop-topbar-actions {
+    gap: 10px;
+  }
+
+  .topbar-nav-button,
+  .topbar-logout-button {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar,
+  .profile-page .topbar {
+    height: 64px;
+    padding: 0 18px;
+  }
+
+  .desktop-topbar-actions {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .mobile-topbar-menu {
+    display: block;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-mark img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+  }
+
+  .brand-subtitle {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar,
+  .profile-page .topbar {
+    height: 60px;
+    padding: 0 14px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .brand-mark img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-name {
+    font-size: 17px;
+  }
+
+  .brand-subtitle {
+    font-size: 10px;
+  }
+
+  .mobile-menu-button {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .mobile-topbar-menu {
+    top: calc(100% + 7px);
+    right: 14px;
+    width: min(220px, calc(100vw - 28px));
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-subtitle {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   GLOBAL PROFILE BUTTON
+   Used by Dashboard, Medicine History and Medical Documents.
+   ========================================================= */
+
+.profile-button {
+  height: 40px;
+  flex: 0 0 auto;
+  padding: 0 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #243447;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-button:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.profile-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .profile-button {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   MEDIVO SHARED MOBILE NAVIGATION
+   This is intentionally the last navigation rule set.
+   It does not override page content/grid responsiveness.
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .topbar {
+    height: 64px;
+    min-height: 64px;
+    padding: 0 18px;
+    position: relative;
+    z-index: 1102;
+  }
+
+  .topbar-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    margin-left: auto;
+    min-width: 40px;
+  }
+
+  .desktop-topbar-actions {
+    display: none !important;
+  }
+
+  .mobile-menu-button {
+    display: flex !important;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    flex: 0 0 40px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    z-index: 1103;
+  }
+
+  .mobile-menu-button span {
+    display: block !important;
+    width: 19px;
+    height: 2px;
+    min-height: 2px;
+    flex: 0 0 2px;
+    border-radius: 999px;
+    background: #2563eb;
+  }
+
+  .mobile-menu-button:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+
+  .mobile-menu-overlay {
+    position: fixed !important;
+    inset: 0;
+    z-index: 1099;
+    background: rgba(15, 23, 42, 0.20);
+  }
+
+  .mobile-menu {
+    position: fixed !important;
+    top: 64px;
+    right: 14px;
+    left: auto;
+    z-index: 1101;
+    width: min(300px, calc(100vw - 28px));
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #ffffff;
+  }
+
+  .mobile-menu-item {
+    width: 100%;
+  }
+
+  .mobile-menu-status {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    height: 60px;
+    min-height: 60px;
+    padding: 0 14px;
+  }
+
+  .mobile-menu-button {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    flex-basis: 38px;
+  }
+
+  .mobile-menu {
+    top: 60px;
+    right: 12px;
+    width: min(280px, calc(100vw - 24px));
+  }
+}
+
+/*
+IMPORTANT:
+The application HTML must contain:
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+If this meta tag is missing, mobile browsers may use a desktop-sized layout
+viewport and media queries will not behave as expected.
+*/

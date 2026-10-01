@@ -14,6 +14,11 @@ export default function Register({
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  // NEW
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [bloodType, setBloodType] = useState("");
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] =
     useState("");
@@ -51,10 +56,35 @@ export default function Register({
       return;
     }
 
+    // NEW - Date of Birth validation
+    if (!dateOfBirth) {
+      setError("Date of birth is required.");
+      return;
+    }
+
+    const selectedDate =
+      new Date(`${dateOfBirth}T00:00:00`);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate > today) {
+      setError("Date of birth cannot be in the future.");
+      return;
+    }
+
+    // NEW - Blood Type validation
+    if (!bloodType) {
+      setError("Blood type is required.");
+      return;
+    }
+
     if (!boxId.trim()) {
-  setError("Medicine Box ID / MAC address is required.");
-  return;
-}
+      setError(
+        "Medicine Box ID / MAC address is required."
+      );
+      return;
+    }
 
     const normalizedBoxId = boxId
       .trim()
@@ -91,6 +121,11 @@ export default function Register({
         email: email.trim(),
         password,
         phoneNumber: phoneNumber.trim(),
+
+        // NEW
+        dateOfBirth,
+        bloodType,
+
         boxId: normalizedBoxId,
       });
 
@@ -119,13 +154,36 @@ export default function Register({
   return (
     <div className="register-page">
       <div className="register-card">
+
+        <div className="register-brand">
+          <div className="register-brand-mark">
+            <img
+              src="/medivo-logo.png"
+              alt="Medivo Logo"
+            />
+          </div>
+
+          <div>
+            <div className="register-brand-name">
+              Medivo
+            </div>
+
+            <div className="register-brand-subtitle">
+              Smart medicine box
+            </div>
+          </div>
+        </div>
+
         <h1>Create Account</h1>
 
         <p className="register-subtitle">
-          Create your Medicine Monitor account.
+          Create your Medivo account.
         </p>
 
         <form onSubmit={handleSubmit}>
+
+          {/* First Name / Last Name */}
+
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="firstName">
@@ -164,6 +222,8 @@ export default function Register({
             </div>
           </div>
 
+          {/* Email */}
+
           <div className="form-group">
             <label htmlFor="email">
               Email
@@ -181,6 +241,8 @@ export default function Register({
               autoComplete="email"
             />
           </div>
+
+          {/* Phone */}
 
           <div className="form-group">
             <label htmlFor="phoneNumber">
@@ -200,28 +262,86 @@ export default function Register({
             />
           </div>
 
-        <div className="form-group">
-          <label htmlFor="boxId">
-            Medicine Box ID / MAC Address
-          </label>
+          {/* Date of Birth / Blood Type */}
 
-          <input
-            id="boxId"
-            type="text"
-            value={boxId}
-            onChange={(event) =>
-              setBoxId(event.target.value.toUpperCase())
-            }
-            placeholder="68:09:47:28:0E:B0"
-            disabled={loading}
-            autoComplete="off"
-            maxLength={17}
-          />
+          <div className="form-row">
 
-          <small>
-            Enter the MAC address shown on your Medicine Monitor box.
-          </small>
-        </div>
+            <div className="form-group">
+              <label htmlFor="dateOfBirth">
+                Date of Birth
+              </label>
+
+              <input
+                id="dateOfBirth"
+                type="date"
+                value={dateOfBirth}
+                onChange={(event) =>
+                  setDateOfBirth(event.target.value)
+                }
+                disabled={loading}
+                autoComplete="bday"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="bloodType">
+                Blood Type
+              </label>
+
+              <select
+                id="bloodType"
+                value={bloodType}
+                onChange={(event) =>
+                  setBloodType(event.target.value)
+                }
+                disabled={loading}
+              >
+                <option value="">
+                  Select blood type
+                </option>
+
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+
+          </div>
+
+          {/* Medicine Box */}
+
+          <div className="form-group">
+            <label htmlFor="boxId">
+              Medicine Box ID / MAC Address
+            </label>
+
+            <input
+              id="boxId"
+              type="text"
+              value={boxId}
+              onChange={(event) =>
+                setBoxId(
+                  event.target.value.toUpperCase()
+                )
+              }
+              placeholder="68:09:47:28:0E:B0"
+              disabled={loading}
+              autoComplete="off"
+              maxLength={17}
+            />
+
+            <small>
+              Enter the MAC address shown on your
+              Medicine Monitor box.
+            </small>
+          </div>
+
+          {/* Password */}
 
           <div className="form-group">
             <label htmlFor="password">
@@ -240,6 +360,8 @@ export default function Register({
               autoComplete="new-password"
             />
           </div>
+
+          {/* Confirm Password */}
 
           <div className="form-group">
             <label htmlFor="confirmPassword">
@@ -280,17 +402,17 @@ export default function Register({
               : "Create Account"}
           </button>
         </form>
+
         <div className="auth-footer">
+          <span>
+            Already have an account?
+          </span>
 
-        <span>
-          Already have an account?
-        </span>
+          <Link to="/login">
+            Sign in
+          </Link>
+        </div>
 
-        <Link to="/login">
-          Sign in
-        </Link>
-
-      </div>
       </div>
     </div>
   );
