@@ -25,6 +25,9 @@ import {
   } from "../services/medicationSerivce";
 
 import { logoutUser } from "../services/authService";
+import {
+  setBoxPower,
+} from "../services/boxService";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -112,7 +115,8 @@ useEffect(() => {
     setIsSheetOpen,
   ] = useState(false);
 
-
+const [isBoxOn, setIsBoxOn] = useState(false);
+const [isPowerUpdating, setIsPowerUpdating] = useState(false);
 
   /*
    * Load medications from PostgreSQL.
@@ -458,6 +462,25 @@ const handleFinishMedication = async (
  
 };
 
+const handlePowerToggle = async () => {
+  const newPowerState = !isBoxOn;
+
+  try {
+    setIsPowerUpdating(true);
+
+    await setBoxPower(newPowerState);
+
+    setIsBoxOn(newPowerState);
+  } catch (error) {
+    console.error(
+      "Failed to update box power:",
+      error
+    );
+  } finally {
+    setIsPowerUpdating(false);
+  }
+};
+
   return (
     <div className="app-shell">
 
@@ -500,6 +523,8 @@ const handleFinishMedication = async (
                 <span className="status-dot" />
                 Box ready
               </div>
+
+      
 
               <button
                 type="button"
@@ -769,8 +794,45 @@ const handleFinishMedication = async (
                 </li>
 
               </ol>
+              {/* ================= BOX POWER ================= */}
+
+              <div className="box-power-section">
+                <div className="box-power-header">
+                  <span className="box-power-label">
+                    Medicine Box
+                  </span>
+
+                  <span
+                    className={`box-power-status ${
+                      isBoxOn
+                        ? "box-power-status-on"
+                        : "box-power-status-off"
+                    }`}
+                  >
+                    {isBoxOn ? "ON" : "OFF"}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handlePowerToggle}
+                  disabled={isPowerUpdating}
+                  className={`box-power-button ${
+                    isBoxOn
+                      ? "box-power-on"
+                      : "box-power-off"
+                  }`}
+                >
+                  {isPowerUpdating
+                    ? "Updating..."
+                    : isBoxOn
+                      ? "Turn Off Box"
+                      : "Turn On Box"}
+                </button>
+              </div>
 
             </aside>
+            
 
           </section>
         )}

@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://medivo-api-production.up.railway.app",//"http://localhost:8081","https://localhost:54335",
+        target: "https://medivo-api-production.up.railway.app",//"http://localhost:8081",//"https://localhost:54335",//
         changeOrigin: true,
         secure: false,
       },
